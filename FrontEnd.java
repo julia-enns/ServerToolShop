@@ -1,3 +1,5 @@
+import com.sun.tools.javac.Main;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -176,7 +178,14 @@ public class FrontEnd {
 	}
 
 	public static void main(String[] args) {
-
+		MainFrame gui = new MainFrame();
+		ToolGetFrame gui2 = new ToolGetFrame("ID");
+		ToolGetFrame gui3 = new ToolGetFrame("NAME");
+		PrintOrderFrame gui4 = new PrintOrderFrame();
+		gui.setVisible(true);
+		gui2.setVisible(true);
+		gui3.setVisible(true);
+		gui4.setVisible(true);
 		FrontEnd app = new FrontEnd();
 		app.menu();
 
