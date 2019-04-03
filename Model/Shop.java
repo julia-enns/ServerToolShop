@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.ArrayList;
 
 public class Shop {
@@ -34,11 +36,11 @@ public class Shop {
 		if (theInventory.manageItem(name) == null)
 			return "Couldn't not decrease item quantity!\n";
 		else
-			return "Item quantity was decreased!\n";
+			return "Model.Item quantity was decreased!\n";
 	}
 
 	public void listAllSuppliers() {
-		// TODO Auto-generated method stub
+
 		for (Supplier s: supplierList) {
 			System.out.println(s);
 		}
@@ -46,20 +48,20 @@ public class Shop {
 	}
 
 	public String getItem(String name) {
-		// TODO Auto-generated method stub
+
 		Item theItem = theInventory.searchForItem(name);
 		if (theItem == null)
-		     return "Item " + name + " could not be found!";
+		     return "Model.Item " + name + " could not be found!";
 		else
 			 return outputItem (theItem);
 			
 	}
 
 	public String getItem(int id) {
-		// TODO Auto-generated method stub
+
 		Item theItem = theInventory.searchForItem(id);
 		if (theItem == null)
-		     return "Item number " + id + " could not be found!";
+		     return "Model.Item number " + id + " could not be found!";
 		else
 			return outputItem (theItem);
 			 
@@ -71,16 +73,16 @@ public class Shop {
 	}
 
 	public String getItemQuantity(String name) {
-		// TODO Auto-generated method stub
+
 		int quantity = theInventory.getItemQuantity(name);
 		if (quantity < 0)
-		    return "Item " + name + " could not be found!";
+		    return "Model.Item " + name + " could not be found!";
 		else
-			return "The quantity of Item " + name + " is: " + quantity + "\n";
+			return "The quantity of Model.Item " + name + " is: " + quantity + "\n";
 	}
 
 	public String printOrder() {
-		// TODO Auto-generated method stub
+
 		
 		return theInventory.printOrder();
 	}

@@ -1,4 +1,10 @@
-import com.sun.tools.javac.Main;
+import Client.GUI.MainFrame;
+import Client.GUI.PrintOrderFrame;
+import Client.GUI.ToolGetFrame;
+import Model.Inventory;
+import Model.Item;
+import Model.Shop;
+import Model.Supplier;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -163,14 +169,14 @@ public class FrontEnd {
 	}
 
 	private void searchForItemById() {
-		// TODO Auto-generated method stub
+
 		int id = getItemId();
 		System.out.println(theShop.getItem(id));
 
 	}
 
 	private void searchForItemByName() {
-		// TODO Auto-generated method stub
+
 
 		String name = getItemName();
 		System.out.println(theShop.getItem(name));

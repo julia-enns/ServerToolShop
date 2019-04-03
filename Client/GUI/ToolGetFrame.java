@@ -1,3 +1,5 @@
+package Client.GUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -70,7 +72,7 @@ public class ToolGetFrame extends JFrame {
      * @param listener listener to add
      */
 
-    public void addListener(ActionListener listener){
+    public void addAllListeners(ActionListener listener){
         okButton.addActionListener(listener);
         cancelButton.addActionListener(listener);
     }

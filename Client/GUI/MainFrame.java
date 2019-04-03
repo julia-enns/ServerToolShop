@@ -1,3 +1,5 @@
+package Client.GUI;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -9,7 +11,7 @@ import java.awt.event.ActionListener;
  */
 
 public class MainFrame extends JFrame {
-
+    private JButton quitButton = new JButton("Quit");
     private JButton listButton = new JButton("List All");
 
     private JButton toolNameButton = new JButton("Tool Name");
@@ -55,6 +57,7 @@ public class MainFrame extends JFrame {
         buttonPanel.add(quantityButton);
         buttonPanel.add(printOrderButton);
         buttonPanel.add(buyButton);
+        buttonPanel.add(quitButton);
         return buttonPanel;
     }
 
@@ -82,16 +85,28 @@ public class MainFrame extends JFrame {
      */
     private JPanel createUpperPanel() {
         JPanel upperPanel = new JPanel();
-        JLabel label = new JLabel("Tool Shop Main Menu");
+        JLabel label = new JLabel("Tool Model.Shop Main Menu");
         upperPanel.add(label);
         return upperPanel;
     }
 
+    public void addAllListeners(ActionListener listener){
+        listButton.addActionListener(listener);
+        toolNameButton.addActionListener(listener);
+        toolIDButton.addActionListener(listener);
+        quantityButton.addActionListener(listener);
+        printOrderButton.addActionListener(listener);
+        buyButton.addActionListener(listener);
+        quitButton.addActionListener(listener);
+    }
+
+
+/**
     /**
      * Conncets a listener to the list button
      *
      * @param listen listener to connect.
-     */
+
     public void addListListener(ActionListener listen) {
         listButton.addActionListener(listen);
     }
@@ -100,7 +115,7 @@ public class MainFrame extends JFrame {
      * Conncets a listener to the toolName button
      *
      * @param listen listener to connect.
-     */
+
     public void addToolNameListener(ActionListener listen) {
         toolNameButton.addActionListener(listen);
     }
@@ -109,7 +124,7 @@ public class MainFrame extends JFrame {
      * Conncets a listener to the toolID button
      *
      * @param listen listener to connect.
-     */
+
     public void addToolIDListener(ActionListener listen) {
         toolIDButton.addActionListener(listen);
     }
@@ -118,13 +133,20 @@ public class MainFrame extends JFrame {
      * Conncets a listener to the quantity button
      *
      * @param listen listener to connect.
-     */
+
+
+
+    */
     public void addQuantityListener(ActionListener listen) {
         quantityButton.addActionListener(listen);
     }
 
     public void addOrderListener(ActionListener listen) {
         printOrderButton.addActionListener(listen);
+    }
+
+    public JButton getQuitButton() {
+        return quitButton;
     }
 
     public JButton getListButton() {
@@ -146,6 +168,12 @@ public class MainFrame extends JFrame {
     public JButton getToolNameButton() {
         return toolNameButton;
     }
+
+    public JButton getBuyButton() {
+        return buyButton;
+    }
+
+
 
     public DefaultListModel<String> getToolList() {
         return toolList;

@@ -1,5 +1,8 @@
+package Client.GUI;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class PrintOrderFrame extends JFrame {
 
@@ -10,7 +13,7 @@ public class PrintOrderFrame extends JFrame {
     /**
      * Cancel button
      */
-    private JButton cancelButton  = new JButton("Cancel");
+   // private JButton cancelButton  = new JButton("Cancel");
 
     private DefaultListModel<String> orderList;
 
@@ -41,13 +44,13 @@ public class PrintOrderFrame extends JFrame {
     public  JPanel createButtonPanel(){
         JPanel p2 = new JPanel();
         p2.add(okButton);
-        p2.add(cancelButton);
+        //p2.add(cancelButton);
         return p2;
     }
 
-    public JButton getCancelButton() {
+   /* public JButton getCancelButton() {
         return cancelButton;
-    }
+    }*/
 
     public JButton getOkButton() {
         return okButton;
@@ -55,5 +58,8 @@ public class PrintOrderFrame extends JFrame {
 
     public DefaultListModel<String> getOrderList() {
         return orderList;
+    }
+    public void addAllListeners(ActionListener listener){
+        okButton.addActionListener(listener);
     }
 }

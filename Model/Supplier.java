@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.ArrayList;
 
 public class Supplier {
@@ -58,7 +60,7 @@ public class Supplier {
 		this.supContactName = supContactName;
 	}
 	public String toString () {
-		return supName + " Supplier ID: " + supId+ "\n";
+		return supName + " Model.Supplier ID: " + supId+ "\n";
 		
 	}
 

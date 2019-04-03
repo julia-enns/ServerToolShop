@@ -1,4 +1,5 @@
-import javax.swing.*;
+import Model.Shop;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -55,11 +56,14 @@ public class Server {
      * Communicates with the client to start a game of Tic Tac Toe
      */
     public void communicate(){
-        try {
-            input = new ObjectInputStream(new FileInputStream("message.ser"));
-        } catch (IOException e){
-            e.printStackTrace();
+        while(input==null) {
+            try {
+                input = new ObjectInputStream(new FileInputStream("message.ser"));
+            } catch (IOException e) {
+
+            }
         }
+
 
         String output = null;
         while(true) {

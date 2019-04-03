@@ -1,3 +1,4 @@
+package Model;
 
 public class Item {
 	
@@ -79,7 +80,7 @@ public class Item {
 	}
 	
 	public String toString () {
-		return "Item ID: " + itemId + ", Item Name: " + itemName + ", Item Quantity: " + 
+		return "Model.Item ID: " + itemId + ", Model.Item Name: " + itemName + ", Model.Item Quantity: " +
 	           itemQuantity + "\n";
 	}
 

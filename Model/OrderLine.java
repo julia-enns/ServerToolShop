@@ -1,3 +1,4 @@
+package Model;
 
 public class OrderLine {
 	
@@ -27,9 +28,9 @@ public class OrderLine {
 		this.orderQuantity = orderQuantity;
 	}
 	public String toString (){
-		return  "Item Name: " + theItem.getItemName() +
-				", Item ID: " + theItem.getItemId()+ "\n" + 
-				"Order Quantity: " + orderQuantity + "\n";
+		return  "Model.Item Name: " + theItem.getItemName() +
+				", Model.Item ID: " + theItem.getItemId()+ "\n" +
+				"Model.Order Quantity: " + orderQuantity + "\n";
 	}
 
 }

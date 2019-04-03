@@ -1,3 +1,5 @@
+import Model.Item;
+
 public class Messenger {
     private int id;
     private String inputText;

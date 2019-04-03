@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +38,7 @@ public class Order {
 		this.orderId = orderId;
 	}
 	public String toString (){
-		String order = "Order Date: " + today.toString() + "\n\n";
+		String order = "Model.Order Date: " + today.toString() + "\n\n";
 		String str = "";
 		for (OrderLine ol: orderLines) {
 			str += ol;
