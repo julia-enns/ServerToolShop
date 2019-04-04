@@ -10,23 +10,22 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * The Client.Client reads an input from the user and sends an output back with the result.
+ * The Client reads an input from the user and sends an output back with the result.
  * Input is sent to server for processing.
  *
- * @author Julia Grab
+ * @author Julia Grab, Kacper Porebski
  * @version 1.0
- * @since March 14, 2019
+ * @since April 4, 2019
  */
 public class Client {
 
-    MainFrame gui = new MainFrame();
-    PrintOrderFrame printOrder = new PrintOrderFrame();
-    ToolGetFrame toolID = new ToolGetFrame("ID");
-    ToolGetFrame toolName = new ToolGetFrame("NAME");
-    ToolGetFrame buyTool = new ToolGetFrame("NAME");
-    ToolGetFrame checkQuantity = new ToolGetFrame("NAME");
-    MessageFrame message = new MessageFrame();
-    GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , this, message);
+    private MainFrame gui;
+    private ToolGetFrame toolID;
+    private ToolGetFrame toolName;
+    private ToolGetFrame buyTool;
+    private ToolGetFrame checkQuantity;
+    private MessageFrame message;
+    private GuiController controller;
     /**
      * The PrintWriter used to write into the socket.
      */
@@ -55,105 +54,51 @@ public class Client {
             stdIn = new BufferedReader(new InputStreamReader(System.in));
             socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
             socketOut = new PrintWriter((aSocket.getOutputStream()), true);
+
+            gui = new MainFrame();
+            toolID = new ToolGetFrame("ID");
+            toolName = new ToolGetFrame("NAME");
+            buyTool = new ToolGetFrame("NAME");
+            checkQuantity = new ToolGetFrame("NAME");
+            message = new MessageFrame();
+            controller = new GuiController(gui, toolName, toolID, checkQuantity, buyTool , this, message);
+
         } catch (IOException e) {
-            System.err.println(e.getStackTrace());
+            System.err.println("Error constructing client");
         }
     }
 
     /**
      * Communicates with the user to enter an input and sends input to the server.
      */
-    public void communicate(String s)  {
+    public void communicate(String s) {
         StringBuilder content = new StringBuilder();
-        String response = "";
         String f;
         String[] number = s.split(",");
-            try {
-                socketOut.println(s);
-                while(!(f=socketIn.readLine()).equals("\0") )
-                {
-                    content.append(f);
-                    content.append(System.lineSeparator());
-
-                }
-                clientFunction(content.toString(),Integer.parseInt(number[0]));
-                //  System.out.println(response);
+        try {
+            socketOut.println(s);
+            while (!(f = socketIn.readLine()).equals("\0")) {
+                content.append(f);
+                content.append(System.lineSeparator());
             }
-            catch (IOException e){
-                e.printStackTrace();
-            }
-
-
-
-
-            }
-
-
-
-
-
-    public void clientFunction(String decode, int caseNum){
-        System.out.print(caseNum);
-        if(caseNum == 1) {
-            gui.getToolList().clear();
-            String[] tools = decode.split("\n");
-            for (String s : tools) {
-                gui.getToolList().addElement(s);
-            }
+            clientFunction(content.toString(), Integer.parseInt(number[0]));
+        } catch (IOException e) {
+            System.err.println("Error communicating in Client");
         }
-        else {
-            JOptionPane.showMessageDialog(null, decode, "Message", JOptionPane.PLAIN_MESSAGE);
-
-        }
-
-
-
     }
 
-       /* String input;
-        while(true){
-            try{
-                if(controller.getInput() != null) {
-                    socketOut.print(controller.getInput());
-                    input = socketIn.readLine();
-                    String[] arr = controller.getInput().split(",");
-                    if (arr[0].equals("1")) {
-                        gui.getToolList().clear();
-                        String [] tools = input.split("\n");
-                        for(String s : tools){
-                            gui.getToolList().addElement(s);
-                        }
-                    } else if (arr[0].equals("6")){
-                        printOrder.getOrderList().addElement(input);
-                    }
-                    else{
-                        JFrame frame = new JFrame("Message");
-
-                    }
-                }
-           break;
-            } catch (IOException e){
-
-            }
-        }
-
-
-         try {
-            stdIn.close();
-            socketIn.close();
-            socketOut.close();
-        } catch (IOException e) {
-            System.out.println("Closing error: " + e.getMessage());
-        }
-
-            */
-
-
+    public void clientFunction(String decode, int caseNum) {
+        if (caseNum == 1) {
+            gui.getToolList().clear();
+            String[] tools = decode.split("\n");
+            for (String s : tools)
+                gui.getToolList().addElement(s);
+        } else
+            JOptionPane.showMessageDialog(null, decode, "Message", JOptionPane.PLAIN_MESSAGE);
+    }
 
     public static void main(String[] args){
         Client aClient = new Client("localhost", 9090);
         aClient.gui.setVisible(true);
-
-
     }
 }

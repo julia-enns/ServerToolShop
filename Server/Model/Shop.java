@@ -8,25 +8,9 @@ public class Shop {
 	private ArrayList <Supplier> supplierList;
 	
 	public Shop (Inventory inventory, ArrayList <Supplier> suppliers) {
-		
 		theInventory = inventory;
 		supplierList = suppliers;
-		
 	}
-	
-	public Inventory getTheInventory () {
-		return theInventory;
-	}
-	public void setTheInventory (Inventory inventory) {
-		theInventory = inventory;
-	}
-	public ArrayList<Supplier> getSupplierList (){
-		return supplierList;
-	}
-	public void setSupplierList (ArrayList <Supplier> suppliers){
-		supplierList = suppliers;
-	}
-	
 
 	public String listAllItems() {
 		return theInventory.toString();
@@ -37,14 +21,6 @@ public class Shop {
 			return "Couldn't not decrease item quantity!\n";
 		else
 			return name + " quantity was decreased!\n";
-	}
-
-	public void listAllSuppliers() {
-
-		for (Supplier s: supplierList) {
-			System.out.println(s);
-		}
-		
 	}
 
 	public String getItem(String name) {
@@ -82,10 +58,6 @@ public class Shop {
 	}
 
 	public String printOrder() {
-		if(theInventory.printOrder().equals("")){
-			return "No Orders Made";
-		}
-		
 		return theInventory.printOrder();
 	}
 

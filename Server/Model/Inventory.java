@@ -13,13 +13,6 @@ public class Inventory {
 		myOrder = new Order ();
 	}
 
-	public ArrayList <Item> getItemList() {
-		return itemList;
-	}
-
-	public void setItemList(ArrayList <Item> itemList) {
-		this.itemList = itemList;
-	}
 	public Item manageItem (String name){
 		Item theItem = decreaseItem (name);
 		
@@ -41,12 +34,11 @@ public class Inventory {
 		if (theItem == null)
 			return null;
 		
-		if (theItem.decreaseItemQuantity() == true){
+		if (theItem.decreaseItemQuantity()){
 			
 			return theItem;
 		}
 		return null;
-		
 	}
 	
 	public int getItemQuantity (String name){
@@ -58,7 +50,7 @@ public class Inventory {
 	}
 	public Item searchForItem (String name) {
 		for (Item i: itemList) {
-			if (i.getItemName().equals(name))
+			if (i.getItemName().toLowerCase().equals(name.toLowerCase()))
 				return i;
 		}
 		return null;
@@ -81,8 +73,6 @@ public class Inventory {
 	}
 
 	public String printOrder() {
-
 		return myOrder.toString();
 	}
-
 }

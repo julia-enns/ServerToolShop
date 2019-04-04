@@ -17,62 +17,19 @@ public class Supplier {
 		supName = name;
 		supAddress = address;
 		supContactName = contactName;
-		itemList = new ArrayList <Item>();
+		itemList = new ArrayList <>();
 	}
-
 
 	public int getSupId() {
 		return supId;
 	}
 
-
-	public void setSupId(int supId) {
-		this.supId = supId;
-	}
-
-
-	public String getSupName() {
-		return supName;
-	}
-
-
-	public void setSupName(String supName) {
-		this.supName = supName;
-	}
-
-
-	public String getSupAddress() {
-		return supAddress;
-	}
-
-
-	public void setSupAddress(String supAddress) {
-		this.supAddress = supAddress;
-	}
-
-
-	public String getSupContactName() {
-		return supContactName;
-	}
-
-
-	public void setSupContactName(String supContactName) {
-		this.supContactName = supContactName;
-	}
 	public String toString () {
 		return supName + " Server.Model.Supplier ID: " + supId+ "\n";
 		
 	}
 
-
 	public ArrayList <Item> getItemList() {
 		return itemList;
 	}
-
-
-	public void setItemList(ArrayList <Item> itemList) {
-		this.itemList = itemList;
-	}
-	
-
 }

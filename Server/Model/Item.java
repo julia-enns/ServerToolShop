@@ -12,13 +12,13 @@ public class Item {
 	private static final int MINIMUMUMBER = 20; 	
 	
 	
-	public Item (int id, String name, int quanitiy, double price, Supplier sup) {
+	public Item (int id, String name, int quantity, double price, Supplier sup) {
 		
 		itemId = id;
 		itemName = name;
-		itemQuantity = quanitiy;
+		itemQuantity = quantity;
 		itemPrice = price;
-		sup = theSupplier; 
+		theSupplier = sup;
 		setAlreadyOrdered(false);
 	}
 	
@@ -33,7 +33,7 @@ public class Item {
 	}
 	public OrderLine placeOrder (){
 		OrderLine ol;
-		if (getItemQuantity() < MINIMUMUMBER && alreadyOrdered == false){
+		if (getItemQuantity() < MINIMUMUMBER && !alreadyOrdered){
 			ol = new OrderLine (this, ORDERQUANTITY);
 			alreadyOrdered = true;
 			return ol;
@@ -45,47 +45,17 @@ public class Item {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
-
 	public String getItemName() {
 		return itemName;
-	}
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
 	}
 
 	public int getItemQuantity() {
 		return itemQuantity;
 	}
 
-	public void setItemQuantity(int itemQuantity) {
-		this.itemQuantity = itemQuantity;
-	}
-
-	public double getItemPrice() {
-		return itemPrice;
-	}
-
-	public void setItemPrice(double itemPrice) {
-		this.itemPrice = itemPrice;
-	}
-	public void setTheSupplier (Supplier sup) {
-		theSupplier = sup;
-	}
-	public Supplier getTheSupplier () {
-		return theSupplier;
-	}
-	
 	public String toString () {
 		return "ID: " + itemId + ", Name: " + itemName + ", Quantity: " +
 	           itemQuantity + "\n";
-	}
-
-	public boolean isAlreadyOrdered() {
-		return alreadyOrdered;
 	}
 
 	public void setAlreadyOrdered(boolean alreadyOrdered) {
