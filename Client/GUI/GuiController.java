@@ -43,6 +43,9 @@ public class GuiController {
         public void actionPerformed(ActionEvent e) {
 
             if(e.getSource() == gui.getListButton()) {
+                input = "DATE\n";
+               client.communicate(input);
+                System.out.println(input);
                 //TODO
             }
             if(e.getSource()==  gui.getPrintOrderButton()){
@@ -65,7 +68,7 @@ public class GuiController {
             }
 
             if(e.getSource()==gui.getQuitButton()){
-                client.setRunning(false);
+              //  client.setRunning(false);
                 gui.setVisible(false);
                 System.exit(1);
             }

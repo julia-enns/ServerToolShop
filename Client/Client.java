@@ -19,27 +19,26 @@ import java.net.Socket;
  */
 public class Client {
     /**
-     * The output to send data to the server
+     * The PrintWriter used to write into the socket.
      */
-    boolean running;
     private PrintWriter socketOut;
     /**
-     * The socket data is being sent to and received from
+     * The socket used to link this client to the server.
      */
     private Socket aSocket;
     /**
-     * The input data the user is entering to the program
+     * The reader used to read from console.
      */
     private BufferedReader stdIn;
     /**
-     * The input received from the server
+     * The reader used to read from the socket.
      */
     private BufferedReader socketIn;
 
     /**
-     * Constructs a Client.Client object with the specified values.
-     * @param serverName name of the server being connected to
-     * @param portNumber number of the port being connected to
+     * Constructs the client.
+     * @param serverName the name of the server.
+     * @param portNumber the port of the server.
      */
     public Client(String serverName, int portNumber) {
         try {
@@ -48,26 +47,38 @@ public class Client {
             socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
             socketOut = new PrintWriter((aSocket.getOutputStream()), true);
         } catch (IOException e) {
-            System.err.println(e.getStackTrace().toString());
+            System.err.println(e.getStackTrace());
         }
     }
 
     /**
      * Communicates with the user to enter an input and sends input to the server.
      */
-    public void communicate()  {
-        MainFrame gui = new MainFrame();
-        PrintOrderFrame printOrder = new PrintOrderFrame();
-        ToolGetFrame toolID = new ToolGetFrame("ID");
-        ToolGetFrame toolName = new ToolGetFrame("NAME");
-        ToolGetFrame buyTool = new ToolGetFrame("NAME");
-        ToolGetFrame checkQuantity = new ToolGetFrame("NAME");
-        MessageFrame message = new MessageFrame();
-        GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , this, message);
-        gui.setVisible(true);
+    public void communicate(String s)  {
+
+        String line = "";
+        String response = "";
+
+            try {
+                line = s;
+                System.out.println(line);
+                socketOut.println(line);
+                response = socketIn.readLine();
+                System.out.println(response);
 
 
-        String input;
+
+
+            } catch (IOException e) {
+                System.out.println("Sending error: " + e.getMessage());
+            }
+
+
+
+    }
+
+
+       /* String input;
         while(true){
             try{
                 if(controller.getInput() != null) {
@@ -103,14 +114,22 @@ public class Client {
             System.out.println("Closing error: " + e.getMessage());
         }
 
+            */
 
-    }
 
-    public void setRunning(boolean r){
-        running=r;
-    }
+
     public static void main(String[] args){
-        Client aClient = new Client("localhost", 8899);
-        aClient.communicate();
+        Client aClient = new Client("localhost", 9090);
+        MainFrame gui = new MainFrame();
+        PrintOrderFrame printOrder = new PrintOrderFrame();
+        ToolGetFrame toolID = new ToolGetFrame("ID");
+        ToolGetFrame toolName = new ToolGetFrame("NAME");
+        ToolGetFrame buyTool = new ToolGetFrame("NAME");
+        ToolGetFrame checkQuantity = new ToolGetFrame("NAME");
+        MessageFrame message = new MessageFrame();
+        GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , aClient, message);
+        gui.setVisible(true);
+
+
     }
 }
