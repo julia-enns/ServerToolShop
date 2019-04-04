@@ -80,12 +80,12 @@ public class Server {
 
             case 2:
                 //TODO SEARCH BY NAME
-                socketOutput.println(theShop.getItem(decode[1]) +"\0");
+                socketOutput.println(theShop.getItem(decode[1]) + "\n\0");
                 break;
 
             case 3:
                 //TODO SAERCH BY ID
-                socketOutput.println(theShop.getItem(Integer.parseInt(decode[1]))+"\0");
+                socketOutput.println(theShop.getItem(Integer.parseInt(decode[1]))+"\n\0");
                 break;
             case 4:
                 //TODO SEARCH BY NAME BUT FIND QUANTITY
@@ -93,7 +93,7 @@ public class Server {
                 break;
             case 5:
                 //TODO DECREASE QUAN
-                socketOutput.println(theShop.decreaseItem(decode[1])+"\0");
+                socketOutput.println(theShop.decreaseItem(decode[1])+"\n\0");
                 break;
             case 6:
                 //TODO PRINT ORDER

@@ -64,19 +64,19 @@ public class Client {
      * Communicates with the user to enter an input and sends input to the server.
      */
     public void communicate(String s)  {
-
+        StringBuilder content = new StringBuilder();
         String response = "";
-        String f= "";
+        String f;
         String[] number = s.split(",");
             try {
                 socketOut.println(s);
-                while(!socketIn.readLine().equals("\0") )
+                while(!(f=socketIn.readLine()).equals("\0") )
                 {
-                    f += socketIn.readLine() + "\n";
-                    clientFunction(f,Integer.parseInt(number[0]));
+                    content.append(f);
+                    content.append(System.lineSeparator());
 
                 }
-
+                clientFunction(content.toString(),Integer.parseInt(number[0]));
                 //  System.out.println(response);
             }
             catch (IOException e){
