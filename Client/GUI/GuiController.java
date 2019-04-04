@@ -43,13 +43,13 @@ public class GuiController {
         public void actionPerformed(ActionEvent e) {
 
             if(e.getSource() == gui.getListButton()) {
-                input = "DATE\n";
+                input = "1";
                client.communicate(input);
-                System.out.println(input);
                 //TODO
             }
             if(e.getSource()==  gui.getPrintOrderButton()){
-                orderFrame.setVisible(true);
+                input = "6";
+                client.communicate(input);
 
             }
             if(e.getSource()== gui.getQuantityButton()){
@@ -92,7 +92,9 @@ public class GuiController {
         public void actionPerformed(ActionEvent e){
             if(e.getSource()==nameFrame.getOkButton()){
                 nameFrame.setVisible(false);
-                input = "2," + nameFrame.getInput().toString();
+                input = "2," + nameFrame.getInput().getText();
+                System.out.print(input);
+                client.communicate(input);
                 //TODO
             }
             if(e.getSource()==nameFrame.getCancelButton()){
@@ -105,7 +107,8 @@ public class GuiController {
             }
             if(e.getSource()==idFrame.getOkButton()){
                 idFrame.setVisible(false);
-                input = "3," + idFrame.getInput().toString();
+                input = "3," + idFrame.getInput().getText();
+                client.communicate(input);
                 //TODO
 
             }
@@ -113,7 +116,8 @@ public class GuiController {
 
             if(e.getSource()==quantityFrame.getOkButton()){
                 quantityFrame.setVisible(false);
-                input = "4," + quantityFrame.getInput().toString();
+                input = "4," + quantityFrame.getInput().getText();
+                client.communicate(input);
                 //TODO
             }
             if(e.getSource()==quantityFrame.getCancelButton()){
@@ -127,7 +131,8 @@ public class GuiController {
             }
             if(e.getSource()==buyFrame.getOkButton()){
                 buyFrame.setVisible(false);
-                input = "5," + buyFrame.getInput().toString();
+                input = "5," + buyFrame.getInput().getText();
+                client.communicate(input);
                 //TODO
             }
 

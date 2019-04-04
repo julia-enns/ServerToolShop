@@ -82,7 +82,9 @@ public class Shop {
 	}
 
 	public String printOrder() {
-
+		if(theInventory.printOrder().equals("")){
+			return "No Orders Made";
+		}
 		
 		return theInventory.printOrder();
 	}

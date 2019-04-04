@@ -80,7 +80,7 @@ public class Item {
 	}
 	
 	public String toString () {
-		return "Server.Model.Item ID: " + itemId + ", Server.Model.Item Name: " + itemName + ", Server.Model.Item Quantity: " +
+		return "ID: " + itemId + ", Name: " + itemName + ", Quantity: " +
 	           itemQuantity + "\n";
 	}
 

@@ -18,6 +18,15 @@ import java.net.Socket;
  * @since March 14, 2019
  */
 public class Client {
+
+    MainFrame gui = new MainFrame();
+    PrintOrderFrame printOrder = new PrintOrderFrame();
+    ToolGetFrame toolID = new ToolGetFrame("ID");
+    ToolGetFrame toolName = new ToolGetFrame("NAME");
+    ToolGetFrame buyTool = new ToolGetFrame("NAME");
+    ToolGetFrame checkQuantity = new ToolGetFrame("NAME");
+    MessageFrame message = new MessageFrame();
+    GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , this, message);
     /**
      * The PrintWriter used to write into the socket.
      */
@@ -56,27 +65,50 @@ public class Client {
      */
     public void communicate(String s)  {
 
-        String line = "";
         String response = "";
-
+        String f= "";
+        String[] number = s.split(",");
             try {
-                line = s;
-                System.out.println(line);
-                socketOut.println(line);
-                response = socketIn.readLine();
-                System.out.println(response);
+                socketOut.println(s);
+                while(!socketIn.readLine().equals("\0") )
+                {
+                    f += socketIn.readLine() + "\n";
+                    clientFunction(f,Integer.parseInt(number[0]));
 
+                }
 
-
-
-            } catch (IOException e) {
-                System.out.println("Sending error: " + e.getMessage());
+                //  System.out.println(response);
+            }
+            catch (IOException e){
+                e.printStackTrace();
             }
 
 
 
-    }
 
+            }
+
+
+
+
+
+    public void clientFunction(String decode, int caseNum){
+        System.out.print(caseNum);
+        if(caseNum == 1) {
+            gui.getToolList().clear();
+            String[] tools = decode.split("\n");
+            for (String s : tools) {
+                gui.getToolList().addElement(s);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, decode, "Message", JOptionPane.PLAIN_MESSAGE);
+
+        }
+
+
+
+    }
 
        /* String input;
         while(true){
@@ -120,15 +152,7 @@ public class Client {
 
     public static void main(String[] args){
         Client aClient = new Client("localhost", 9090);
-        MainFrame gui = new MainFrame();
-        PrintOrderFrame printOrder = new PrintOrderFrame();
-        ToolGetFrame toolID = new ToolGetFrame("ID");
-        ToolGetFrame toolName = new ToolGetFrame("NAME");
-        ToolGetFrame buyTool = new ToolGetFrame("NAME");
-        ToolGetFrame checkQuantity = new ToolGetFrame("NAME");
-        MessageFrame message = new MessageFrame();
-        GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , aClient, message);
-        gui.setVisible(true);
+        aClient.gui.setVisible(true);
 
 
     }
