@@ -5,6 +5,7 @@ import Client.GUI.MainFrame;
 import Client.GUI.PrintOrderFrame;
 import Client.GUI.ToolGetFrame;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,7 +29,7 @@ public class Client {
     /**
      * The socket data is being sent to and received from
      */
-    private Socket palinSocket;
+    private Socket aSocket;
     /**
      * The input data the user is entering to the program
      */
@@ -45,12 +46,12 @@ public class Client {
      */
     public Client(String serverName, int portNumber) {
         try {
-            palinSocket = new Socket(serverName, portNumber);
+            aSocket = new Socket(serverName, portNumber);
             stdIn = new BufferedReader(new InputStreamReader(System.in));
-            socketIn = new BufferedReader(new InputStreamReader(palinSocket.getInputStream()));
-            socketOut = new PrintWriter((palinSocket.getOutputStream()), true);
+            socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
+            socketOut = new PrintWriter((aSocket.getOutputStream()), true);
         } catch (IOException e) {
-            System.err.println(e.getStackTrace());
+            System.err.println(e.getStackTrace().toString());
         }
     }
 
@@ -66,10 +67,33 @@ public class Client {
         ToolGetFrame checkQuantity = new ToolGetFrame("NAME");
         GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , this);
         gui.setVisible(true);
-    /*    running=true;
-        while(running){
-            //TODO
-            System.out.println("yes");
+
+
+        String input;
+        while(true){
+            try{
+                if(controller.getInput() != null) {
+                    socketOut.print(controller.getInput());
+                    input = socketIn.readLine();
+                    String[] arr = controller.getInput().split(",");
+                    if (arr[0].equals("1")) {
+                        gui.getToolList().clear();
+                        String [] tools = arr[1].split("\n");
+                        for(String s : tools){
+                            gui.getToolList().addElement(s);
+                        }
+                    } else if (arr[0].equals("6")){
+                        printOrder.getOrderList().addElement(arr[1]);
+                    }
+                    else{
+                        JFrame frame = new JFrame("Message");
+
+                    }
+                }
+           break;
+            } catch (IOException e){
+
+            }
         }
 
 
@@ -80,7 +104,7 @@ public class Client {
         } catch (IOException e) {
             System.out.println("Closing error: " + e.getMessage());
         }
-        */
+
 
     }
 

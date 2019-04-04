@@ -1,4 +1,4 @@
-package Model;
+package Server.Model;
 
 public class Item {
 	
@@ -80,7 +80,7 @@ public class Item {
 	}
 	
 	public String toString () {
-		return "Model.Item ID: " + itemId + ", Model.Item Name: " + itemName + ", Model.Item Quantity: " +
+		return "Server.Model.Item ID: " + itemId + ", Server.Model.Item Name: " + itemName + ", Server.Model.Item Quantity: " +
 	           itemQuantity + "\n";
 	}
 

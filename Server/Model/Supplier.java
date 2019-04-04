@@ -1,4 +1,4 @@
-package Model;
+package Server.Model;
 
 import java.util.ArrayList;
 
@@ -60,7 +60,7 @@ public class Supplier {
 		this.supContactName = supContactName;
 	}
 	public String toString () {
-		return supName + " Model.Supplier ID: " + supId+ "\n";
+		return supName + " Server.Model.Supplier ID: " + supId+ "\n";
 		
 	}
 

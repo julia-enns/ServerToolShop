@@ -85,7 +85,7 @@ public class MainFrame extends JFrame {
      */
     private JPanel createUpperPanel() {
         JPanel upperPanel = new JPanel();
-        JLabel label = new JLabel("Tool Model.Shop Main Menu");
+        JLabel label = new JLabel("Tool Server.Model.Shop Main Menu");
         upperPanel.add(label);
         return upperPanel;
     }
@@ -178,4 +178,6 @@ public class MainFrame extends JFrame {
     public DefaultListModel<String> getToolList() {
         return toolList;
     }
+
+
 }

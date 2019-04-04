@@ -2,6 +2,7 @@ package Client.GUI;
 
 import Client.Client;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +10,7 @@ public class GuiController {
 
     private Client client;
     private MainFrame gui;
+    private String input;
 
     private PrintOrderFrame orderFrame;
 
@@ -84,6 +86,8 @@ public class GuiController {
         @Override
         public void actionPerformed(ActionEvent e){
             if(e.getSource()==nameFrame.getOkButton()){
+                nameFrame.setVisible(false);
+                input = "2," + nameFrame.getInput().toString();
                 //TODO
             }
             if(e.getSource()==nameFrame.getCancelButton()){
@@ -95,12 +99,16 @@ public class GuiController {
                 idFrame.setVisible(false);
             }
             if(e.getSource()==idFrame.getOkButton()){
+                idFrame.setVisible(false);
+                input = "3," + idFrame.getInput().toString();
                 //TODO
 
             }
             //END OF FIND BY TOOL ID BUTTON FUNCTIONS
 
             if(e.getSource()==quantityFrame.getOkButton()){
+                quantityFrame.setVisible(false);
+                input = "4," + quantityFrame.getInput().toString();
                 //TODO
             }
             if(e.getSource()==quantityFrame.getCancelButton()){
@@ -113,6 +121,8 @@ public class GuiController {
                 buyFrame.setVisible(false);
             }
             if(e.getSource()==buyFrame.getOkButton()){
+                buyFrame.setVisible(false);
+                input = "5," + buyFrame.getInput().toString();
                 //TODO
             }
 
@@ -120,5 +130,7 @@ public class GuiController {
         }
     }
 
-
+    public String getInput() {
+        return input;
+    }
 }

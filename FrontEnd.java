@@ -1,10 +1,10 @@
 import Client.GUI.MainFrame;
 import Client.GUI.PrintOrderFrame;
 import Client.GUI.ToolGetFrame;
-import Model.Inventory;
-import Model.Item;
-import Model.Shop;
-import Model.Supplier;
+import Server.Model.Inventory;
+import Server.Model.Item;
+import Server.Model.Shop;
+import Server.Model.Supplier;
 
 import java.io.*;
 import java.util.ArrayList;

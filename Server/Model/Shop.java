@@ -1,4 +1,4 @@
-package Model;
+package Server.Model;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,7 @@ public class Shop {
 		if (theInventory.manageItem(name) == null)
 			return "Couldn't not decrease item quantity!\n";
 		else
-			return "Model.Item quantity was decreased!\n";
+			return "Server.Model.Item quantity was decreased!\n";
 	}
 
 	public void listAllSuppliers() {
@@ -51,7 +51,7 @@ public class Shop {
 
 		Item theItem = theInventory.searchForItem(name);
 		if (theItem == null)
-		     return "Model.Item " + name + " could not be found!";
+		     return "Server.Model.Item " + name + " could not be found!";
 		else
 			 return outputItem (theItem);
 			
@@ -61,7 +61,7 @@ public class Shop {
 
 		Item theItem = theInventory.searchForItem(id);
 		if (theItem == null)
-		     return "Model.Item number " + id + " could not be found!";
+		     return "Server.Model.Item number " + id + " could not be found!";
 		else
 			return outputItem (theItem);
 			 
@@ -76,9 +76,9 @@ public class Shop {
 
 		int quantity = theInventory.getItemQuantity(name);
 		if (quantity < 0)
-		    return "Model.Item " + name + " could not be found!";
+		    return "Server.Model.Item " + name + " could not be found!";
 		else
-			return "The quantity of Model.Item " + name + " is: " + quantity + "\n";
+			return "The quantity of Server.Model.Item " + name + " is: " + quantity + "\n";
 	}
 
 	public String printOrder() {
