@@ -1,9 +1,6 @@
 package Client;
 
-import Client.GUI.GuiController;
-import Client.GUI.MainFrame;
-import Client.GUI.PrintOrderFrame;
-import Client.GUI.ToolGetFrame;
+import Client.GUI.*;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -65,7 +62,8 @@ public class Client {
         ToolGetFrame toolName = new ToolGetFrame("NAME");
         ToolGetFrame buyTool = new ToolGetFrame("NAME");
         ToolGetFrame checkQuantity = new ToolGetFrame("NAME");
-        GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , this);
+        MessageFrame message = new MessageFrame();
+        GuiController controller = new GuiController(gui, printOrder, toolName, toolID, checkQuantity, buyTool , this, message);
         gui.setVisible(true);
 
 
@@ -78,12 +76,12 @@ public class Client {
                     String[] arr = controller.getInput().split(",");
                     if (arr[0].equals("1")) {
                         gui.getToolList().clear();
-                        String [] tools = arr[1].split("\n");
+                        String [] tools = input.split("\n");
                         for(String s : tools){
                             gui.getToolList().addElement(s);
                         }
                     } else if (arr[0].equals("6")){
-                        printOrder.getOrderList().addElement(arr[1]);
+                        printOrder.getOrderList().addElement(input);
                     }
                     else{
                         JFrame frame = new JFrame("Message");

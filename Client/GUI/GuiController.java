@@ -18,10 +18,12 @@ public class GuiController {
     private ToolGetFrame nameFrame;
     private ToolGetFrame buyFrame;
     private ToolGetFrame  idFrame;
+    private MessageFrame message;
 
-    public GuiController(MainFrame g , PrintOrderFrame o, ToolGetFrame name , ToolGetFrame id , ToolGetFrame quantity, ToolGetFrame buy, Client c){
+    public GuiController(MainFrame g , PrintOrderFrame o, ToolGetFrame name , ToolGetFrame id , ToolGetFrame quantity, ToolGetFrame buy, Client c, MessageFrame m){
         gui = g;
         orderFrame = o;
+        message=m;
         nameFrame = name;
         idFrame = id;
         quantityFrame=quantity;
@@ -125,6 +127,14 @@ public class GuiController {
                 input = "5," + buyFrame.getInput().toString();
                 //TODO
             }
+
+            //END OF BUY BUTTONS FUNCTIONS
+
+            if(e.getSource()==message.getOkButton()){
+                message.setVisible(false);
+            }
+
+            //END OF MESSAGE OK FUNCTION
 
 
         }
