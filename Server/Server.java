@@ -99,8 +99,12 @@ public class Server {
                 socketOutput.println(theShop.getItem(decode[1]) + "\n\0");
                 break;
             case 3:
-                socketOutput.println(theShop.getItem(Integer.parseInt(decode[1]))+"\n\0");
-                break;
+                try {
+                    socketOutput.println(theShop.getItem(Integer.parseInt(decode[1])) + "\n\0");
+                    break;
+                } catch(NumberFormatException e){
+                    socketOutput.print("");
+                }
             case 4:
                 socketOutput.println(theShop.getItemQuantity(decode[1])+"\n\0");
                 break;
@@ -119,7 +123,7 @@ public class Server {
     private void serverReadSuppliers() {
 
         try {
-            FileReader fr = new FileReader("milestone-1\\suppliers.txt");
+            FileReader fr = new FileReader("src\\suppliers.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
@@ -141,7 +145,7 @@ public class Server {
         ArrayList<Item> items = new ArrayList<>();
 
         try {
-            FileReader fr = new FileReader("milestone-1\\items.txt");
+            FileReader fr = new FileReader("src\\items.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line = "";
