@@ -27,7 +27,7 @@ public class ToolGetFrame extends JFrame {
      */
     public ToolGetFrame(String info) {
         this.setTitle("Read");
-        this.setSize(270, 215);
+        this.setSize(270, 175);
         this.add(createCenterPanel(info), BorderLayout.CENTER);
         this.add(createButtonPanel(), BorderLayout.SOUTH);
     }
