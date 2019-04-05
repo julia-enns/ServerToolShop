@@ -37,6 +37,10 @@ public class GuiController {
      * The frame created when the search ID button is pressed
      */
     private ToolGetFrame idFrame;
+    /**
+     * The frame created to login to Tool Shop
+     */
+    private UserFrame loginFrame;
 
     /**
      * Constructs an object of type GuiController
@@ -47,18 +51,21 @@ public class GuiController {
      * @param buy the frame that decreases the quantity of a tool
      * @param c the client that connects to the GUI
      */
-    public GuiController(MainFrame g, ToolGetFrame name, ToolGetFrame id , ToolGetFrame quantity, ToolGetFrame buy, Client c){
+    public GuiController(MainFrame g, ToolGetFrame name, ToolGetFrame id , ToolGetFrame quantity, ToolGetFrame buy, UserFrame log, Client c){
         gui = g;
         nameFrame = name;
         idFrame = id;
-        quantityFrame=quantity;
-        buyFrame=buy;
+        quantityFrame = quantity;
+        buyFrame = buy;
+        loginFrame = log;
         gui.addAllListeners(new MainListener());
         nameFrame.addAllListeners(new ToolListener());
         idFrame.addAllListeners(new ToolListener());
         buyFrame.addAllListeners(new ToolListener());
         quantityFrame.addAllListeners(new ToolListener());
-        client= c;
+        loginFrame.addAllListeners(new ToolListener());
+
+        client = c;
     }
 
     /**
@@ -156,6 +163,18 @@ public class GuiController {
                 buyFrame.setVisible(false);
             }
             //END OF BUY BUTTONS FUNCTIONS
+
+            if(e.getSource()==loginFrame.getOkButton()){
+                loginFrame.setVisible(false);
+                if(!loginFrame.getUsername().getText().equals("") || !loginFrame.getPassword().getText().equals("")) {
+                    input = "0," + loginFrame.getUsername().getText() + "," + loginFrame.getPassword().getText();
+                    client.communicate(input);
+                }
+            }
+            if(e.getSource()==loginFrame.getCancelButton()){
+                loginFrame.setVisible(false);
+            }
+            //END OF LOGIN BUTTONS FUNCTIONS
         }
     }
 }

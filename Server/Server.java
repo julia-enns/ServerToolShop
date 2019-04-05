@@ -20,6 +20,10 @@ import java.util.ArrayList;
  */
 public class Server {
     /**
+     * List of logins
+     */
+    private String[][] login;
+    /**
      *Buffered reader that reads from the server
      */
     private BufferedReader socketInput;
@@ -58,11 +62,13 @@ public class Server {
         theShop = new Shop(theInventory, suppliers);
 
         try {
+            //serverSocket = new ServerSocket(44612); //Used to connect two laptops
             serverSocket = new ServerSocket(9090);
             System.out.println("Server is now running.");
             aSocket = serverSocket.accept();
             socketInput = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
             socketOutput = new PrintWriter(aSocket.getOutputStream(), true);
+            makeLogin();
         } catch (IOException e) {
             System.err.println("Error constructing Server");
         }
@@ -92,6 +98,17 @@ public class Server {
      */
     private void serverFunction(String[] decode){
         switch(Integer.parseInt(decode[0])){
+            case 0:
+                for(int i=0; i < 2; i++) {
+                    if (decode[1].equals(login[i][0])) {
+                        if (decode[2].equals(login[i][1])) {
+                            socketOutput.println("true"+"\n\0");
+                            return;
+                        }
+                    }
+                }
+                socketOutput.println("false"+"\n\0");
+                break;
             case 1:
                 socketOutput.println(theShop.listAllItems() + "\n\0");
                 break;
@@ -123,7 +140,7 @@ public class Server {
     private void serverReadSuppliers() {
 
         try {
-            FileReader fr = new FileReader("src\\suppliers.txt");
+            FileReader fr = new FileReader("milestone-1\\suppliers.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
@@ -145,7 +162,7 @@ public class Server {
         ArrayList<Item> items = new ArrayList<>();
 
         try {
-            FileReader fr = new FileReader("src\\items.txt");
+            FileReader fr = new FileReader("milestone-1\\items.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line = "";
@@ -165,6 +182,17 @@ public class Server {
             System.out.println("Error reading in the list of items");
         }
         return items;
+    }
+
+    /**
+     * Creates user names and passwords
+     */
+    private void makeLogin(){
+        login = new String[2][2];
+        login[0][0] = "kkporebski";
+        login[0][1] = "1";
+        login[1][0] = "julia_grab";
+        login[1][1] = "2";
     }
 
     /**

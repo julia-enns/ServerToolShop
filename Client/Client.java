@@ -40,6 +40,10 @@ public class Client {
      */
     private ToolGetFrame checkQuantity;
     /**
+     * The frame that asks user for username and password
+     */
+    private UserFrame login;
+    /**
      * The controller that connects all the buttons to their listeners
      */
     private GuiController controller;
@@ -67,6 +71,7 @@ public class Client {
      */
     public Client(String serverName, int portNumber) {
         try {
+
             aSocket = new Socket(serverName, portNumber);
             stdIn = new BufferedReader(new InputStreamReader(System.in));
             socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
@@ -77,7 +82,8 @@ public class Client {
             toolName = new ToolGetFrame("NAME");
             buyTool = new ToolGetFrame("NAME");
             checkQuantity = new ToolGetFrame("NAME");
-            controller = new GuiController(gui, toolName, toolID, checkQuantity, buyTool , this);
+            login = new UserFrame();
+            controller = new GuiController(gui, toolName, toolID, checkQuantity, buyTool, login, this);
 
         } catch (IOException e) {
             System.err.println("Error constructing client");
@@ -92,11 +98,13 @@ public class Client {
         String f;
         String[] number = s.split(",");
         try {
-            socketOut.println(s);
+             socketOut.println(s);
+
             while (!(f = socketIn.readLine()).equals("\0")) {
                 content.append(f);
                 content.append(System.lineSeparator());
             }
+            //System.out.println(content.toString());
             clientFunction(content.toString(), Integer.parseInt(number[0]));
         } catch (IOException e) {
             System.err.println("Error communicating in Client");
@@ -109,7 +117,15 @@ public class Client {
      * @param caseNum number of which case is being accessed
      */
     public void clientFunction(String decode, int caseNum) {
-        if (caseNum == 1) {
+        if(caseNum == 0){
+            if(decode.charAt(0)=='t')
+                gui.setVisible(true);
+            else {
+                JOptionPane.showMessageDialog(null, "Incorrect Login", "Wrong username or password", JOptionPane.PLAIN_MESSAGE);
+                login.setVisible(true);
+            }
+        }
+        else if (caseNum == 1) {
             gui.getToolList().clear();
             String[] tools = decode.split("\n");
             for (String s : tools)
@@ -119,7 +135,8 @@ public class Client {
     }
 
     public static void main(String[] args){
+        //Client aClient = new Client("10.13.84.113", 44612); //Used to connect two laptops
         Client aClient = new Client("localhost", 9090);
-        aClient.gui.setVisible(true);
+        aClient.login.setVisible(true);
     }
 }

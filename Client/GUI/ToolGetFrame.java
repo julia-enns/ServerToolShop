@@ -62,7 +62,7 @@ public class ToolGetFrame extends JFrame {
      * Creates the bottom panel with required buttons
      * @return the bottom button panel
      */
-    public  JPanel createButtonPanel(){
+    public JPanel createButtonPanel(){
         JPanel p2 = new JPanel();
         p2.add(okButton);
         p2.add(cancelButton);
