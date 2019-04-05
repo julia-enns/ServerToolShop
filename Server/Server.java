@@ -11,14 +11,41 @@ import java.net.Socket;
 
 import java.util.ArrayList;
 
-
+/**
+ * The Server reads an input from the cleint and sends an output back to the client
+ *
+ * @author Julia Grab, Kacper Porebski
+ * @version 1.0
+ * @since April 4, 2019
+ */
 public class Server {
+    /**
+     *Buffered reader that reads from the server
+     */
     private BufferedReader socketInput;
+    /**
+     * Print Writer the sends output to server
+     */
     private PrintWriter socketOutput;
+    /**
+     * Server socket the server is connected to
+     */
     private ServerSocket serverSocket;
+    /**
+     * The socket that connects the client and the server
+     */
     private Socket aSocket;
+    /**
+     * List of the suppliers
+     */
     private ArrayList<Supplier> suppliers;
+    /**
+     * Inventory of the tool shop
+     */
     private Inventory theInventory;
+    /**
+     * The tool shop
+     */
     private Shop theShop;
 
     /**
@@ -59,7 +86,10 @@ public class Server {
         }
     }
 
-
+    /**
+     * Chooses what is sent to the client depending on which button was pressed
+     * @param decode choice number made and input sent in
+     */
     private void serverFunction(String[] decode){
         switch(Integer.parseInt(decode[0])){
             case 1:
@@ -83,6 +113,9 @@ public class Server {
         }
     }
 
+    /**
+     * Reads in the list of suppliers to the shop
+     */
     private void serverReadSuppliers() {
 
         try {
@@ -99,6 +132,10 @@ public class Server {
         }
     }
 
+    /**
+     * Reads in the list of items to the shop
+     * @return list of items
+     */
     private ArrayList<Item> serverReadItems() {
 
         ArrayList<Item> items = new ArrayList<>();
@@ -126,6 +163,11 @@ public class Server {
         return items;
     }
 
+    /**
+     * Searches through the list of the suppliers
+     * @param supplierId supplied ID being searched for
+     * @return the supplier information
+     */
     private Supplier findSupplier(int supplierId) {
         Supplier theSupplier = null;
         for (Supplier s : suppliers) {

@@ -19,12 +19,29 @@ import java.net.Socket;
  */
 public class Client {
 
+    /**
+     * The main window of the GUI
+     */
     private MainFrame gui;
+    /**
+     * The frame that asks user to enter in a tool ID
+     */
     private ToolGetFrame toolID;
+    /**
+     * The frame that asks user to enter in a tool name
+     */
     private ToolGetFrame toolName;
+    /**
+     * The frame that asks user which tool they want to buy
+     */
     private ToolGetFrame buyTool;
+    /**
+     * The frame that asks user which tool they want to check the quantity of
+     */
     private ToolGetFrame checkQuantity;
-    private MessageFrame message;
+    /**
+     * The controller that connects all the buttons to their listeners
+     */
     private GuiController controller;
     /**
      * The PrintWriter used to write into the socket.
@@ -60,8 +77,7 @@ public class Client {
             toolName = new ToolGetFrame("NAME");
             buyTool = new ToolGetFrame("NAME");
             checkQuantity = new ToolGetFrame("NAME");
-            message = new MessageFrame();
-            controller = new GuiController(gui, toolName, toolID, checkQuantity, buyTool , this, message);
+            controller = new GuiController(gui, toolName, toolID, checkQuantity, buyTool , this);
 
         } catch (IOException e) {
             System.err.println("Error constructing client");
@@ -87,6 +103,11 @@ public class Client {
         }
     }
 
+    /**
+     * Updates the GUI or prints a message depending on which button was pressed
+     * @param decode output received from the server
+     * @param caseNum number of which case is being accessed
+     */
     public void clientFunction(String decode, int caseNum) {
         if (caseNum == 1) {
             gui.getToolList().clear();

@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Creates a Frame that asks the user to search for a tool in a specified way.
+ */
 public class ToolGetFrame extends JFrame {
 
     /**
@@ -20,7 +23,7 @@ public class ToolGetFrame extends JFrame {
     private JTextField input = new JTextField(15);
 
     /**
-     * Constructs the gui frame
+     * Constructs the GUI frame
      */
     public ToolGetFrame(String info) {
         this.setTitle("Read");
@@ -33,7 +36,6 @@ public class ToolGetFrame extends JFrame {
      * Getter for the input field
      * @return the input field
      */
-
     public JTextField getInput() {
         return input;
     }
@@ -71,7 +73,6 @@ public class ToolGetFrame extends JFrame {
      * Connects listeners to the frames buttons
      * @param listener listener to add
      */
-
     public void addAllListeners(ActionListener listener){
         okButton.addActionListener(listener);
         cancelButton.addActionListener(listener);

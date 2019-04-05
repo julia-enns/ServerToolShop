@@ -2,20 +2,42 @@ package Server.Model;
 
 import java.util.ArrayList;
 
+/**
+ * Makes a tool shop with an inventory.
+ */
 public class Shop {
-	
+	/**
+	 * The shops inventory
+	 */
 	private Inventory theInventory;
+	/**
+	 * List of suppliers
+	 */
 	private ArrayList <Supplier> supplierList;
-	
+
+	/**
+	 * Constructs an object of type Shop
+	 * @param inventory the shops inventory
+	 * @param suppliers list of suppliers
+	 */
 	public Shop (Inventory inventory, ArrayList <Supplier> suppliers) {
 		theInventory = inventory;
 		supplierList = suppliers;
 	}
 
+	/**
+	 * Lists items
+	 * @return String of items
+	 */
 	public String listAllItems() {
 		return theInventory.toString();
 	}
 
+	/**
+	 * Decreases an item
+	 * @param name item being decreased
+	 * @return String of item quantity
+	 */
 	public String decreaseItem (String name) {
 		if (theInventory.manageItem(name) == null)
 			return "Couldn't not decrease item quantity!\n";
@@ -23,6 +45,11 @@ public class Shop {
 			return name + " quantity was decreased!\n";
 	}
 
+	/**
+	 * Returns item
+	 * @param name name of the item
+	 * @return String of item
+	 */
 	public String getItem(String name) {
 
 		Item theItem = theInventory.searchForItem(name);
@@ -33,6 +60,11 @@ public class Shop {
 			
 	}
 
+	/**
+	 * Returns item
+	 * @param id id of the item
+	 * @return item information
+	 */
 	public String getItem(int id) {
 
 		Item theItem = theInventory.searchForItem(id);
@@ -43,11 +75,21 @@ public class Shop {
 			 
 		
 	}
-	
+
+	/**
+	 * Outputs item information
+	 * @param theItem item being outputted
+	 * @return item information
+	 */
 	private String outputItem (Item theItem){
 		return "The item information is as follows: \n" + theItem;
 	}
 
+	/**
+	 * Returns item quantity
+	 * @param name item
+	 * @return item quantity
+	 */
 	public String getItemQuantity(String name) {
 
 		int quantity = theInventory.getItemQuantity(name);
@@ -57,10 +99,11 @@ public class Shop {
 			return "The quantity of " + name + " is: " + quantity + "\n";
 	}
 
+	/**
+	 * String of order being printed
+	 * @return order
+	 */
 	public String printOrder() {
 		return theInventory.printOrder();
 	}
-
-	
-
 }
