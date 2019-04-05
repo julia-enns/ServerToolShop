@@ -47,11 +47,11 @@ public class ToolGetFrame extends JFrame {
     public JPanel createCenterPanel(String info){
         JPanel panel = new JPanel();
         if(info.equals("NAME")) {
-            JLabel label = new JLabel("Enter the tool name:\n");
+            JLabel label = new JLabel("Please enter the tool name:\n");
             panel.add(label);
         }
         else{
-            JLabel label = new JLabel("Enter the tool ID:\n");
+            JLabel label = new JLabel("Please enter the tool ID:\n");
             panel.add(label);
         }
         panel.add(this.input);
