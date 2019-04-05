@@ -56,7 +56,7 @@ public class MainFrame extends JFrame {
      */
     public MainFrame() {
         this.setTitle("Main Window");
-        this.setSize(1050, 550);
+        this.setSize(1100, 550);
         this.add(createButtonPanel(), BorderLayout.WEST);
         this.add(createCenterPanel(), BorderLayout.CENTER);
         this.add(createUpperPanel(), BorderLayout.NORTH);

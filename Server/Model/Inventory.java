@@ -101,7 +101,7 @@ public class Inventory {
 	public String toString () {
 		String str = "";
 		for (Item i: itemList) {
-			str += i;
+			str += i.toStringList();
 		}
 		return str;
 	}

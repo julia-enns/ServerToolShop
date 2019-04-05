@@ -110,9 +110,21 @@ public class Item {
 	 * Makes a string of tool information
 	 * @return string of tool information
 	 */
+	public String toStringList () {
+		String price = String.format("%.2f", itemPrice);
+		String print = String.format("%-10s %-20s %-15s %-15s %-20s", "ID: " + itemId, "Name: " + itemName,
+				"Quantity: " + itemQuantity, "Price: $" + price, "Supplier: " + theSupplier.toStringList() + "\n");
+		return print;
+	}
+
+	/**
+	 * Makes a string of tool information
+	 * @return string of tool information
+	 */
 	public String toString () {
+		String price = String.format("%.2f", itemPrice);
 		return "ID: " + itemId + ", Name: " + itemName + ", Quantity: " +
-	           itemQuantity + ", Price: " + itemPrice + ", Supplied ID: " + theSupplier.toString() + "\n";
+				itemQuantity + ", Price: $" + price + "\nSupplier: " + theSupplier.toString() + "\n";
 	}
 
 	/**

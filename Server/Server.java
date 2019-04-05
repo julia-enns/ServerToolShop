@@ -119,7 +119,7 @@ public class Server {
     private void serverReadSuppliers() {
 
         try {
-            FileReader fr = new FileReader("src\\suppliers.txt");
+            FileReader fr = new FileReader("milestone-1\\suppliers.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
@@ -141,7 +141,7 @@ public class Server {
         ArrayList<Item> items = new ArrayList<>();
 
         try {
-            FileReader fr = new FileReader("src\\items.txt");
+            FileReader fr = new FileReader("milestone-1\\items.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line = "";

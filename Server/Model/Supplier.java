@@ -54,9 +54,19 @@ public class Supplier {
 	 * Converts supplier information into a string
 	 * @return supplier string
 	 */
+	public String toStringList () {
+		String print = String.format("%-30s %-10s", supName, "Suppier ID: " + supId);
+		return print;
+	}
+
+	/**
+	 * Converts supplier information into a string
+	 * @return supplier string
+	 */
 	public String toString () {
 		return supName + " Supplier ID: " + supId ;
 	}
+
 
 	/**
 	 * Returns item list
