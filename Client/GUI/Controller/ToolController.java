@@ -1,22 +1,22 @@
-package Client.GUI;
+package Client.GUI.Controller;
 
 import Client.Client;
+import Client.GUI.ListToolFrame;
+import Client.GUI.ToolGetFrame;
+import Client.GUI.UserFrame;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Connects all the buttons on the GUI to their listeners and actions
+ * Connects the buttons on the tool frames to their listeners and actions
  */
-public class GuiController {
+public class ToolController {
     /**
      * The client the controller connects to
      */
     private Client client;
-    /**
-     * The main GUI the controller connects to
-     */
-    private MainFrame gui;
     /**
      * The input that is sent to the client from GUI
      */
@@ -43,22 +43,16 @@ public class GuiController {
     private UserFrame loginFrame;
 
     /**
-     * Constructs an object of type GuiController
-     * @param g the main frame of the GUI
-     * @param name the frame that accesses the search by tool name
-     * @param id the frame that accesses the search by tool ID
-     * @param quantity the frame that accesses the quantity of a tool
-     * @param buy the frame that decreases the quantity of a tool
+     * Constructs an object of type ToolController
+     * @param t list of tool frames in the GUI
      * @param c the client that connects to the GUI
      */
-    public GuiController(MainFrame g, ToolGetFrame name, ToolGetFrame id , ToolGetFrame quantity, ToolGetFrame buy, UserFrame log, Client c){
-        gui = g;
-        nameFrame = name;
-        idFrame = id;
-        quantityFrame = quantity;
-        buyFrame = buy;
-        loginFrame = log;
-        gui.addAllListeners(new MainListener());
+    public ToolController(ListToolFrame t, Client c){
+        nameFrame = t.getNameFrame();
+        idFrame = t.getIdFrame();
+        quantityFrame = t.getQuantityFrame();
+        buyFrame = t.getBuyFrame();
+        loginFrame = t.getLoginFrame();
         nameFrame.addAllListeners(new ToolListener());
         idFrame.addAllListeners(new ToolListener());
         buyFrame.addAllListeners(new ToolListener());
@@ -66,41 +60,6 @@ public class GuiController {
         loginFrame.addAllListeners(new ToolListener());
 
         client = c;
-    }
-
-    /**
-     * Creates listeners for the main GUI buttons
-     */
-    class MainListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if (e.getSource() == gui.getListButton()) {
-                input = "1";
-                client.communicate(input);
-            }
-            if (e.getSource() == gui.getPrintOrderButton()) {
-                input = "6";
-                client.communicate(input);
-            }
-            if (e.getSource() == gui.getQuantityButton()) {
-                quantityFrame.setVisible(true);
-            }
-            if (e.getSource() == gui.getToolIDButton()) {
-                idFrame.setVisible(true);
-            }
-            if (e.getSource() == gui.getToolNameButton()) {
-                nameFrame.setVisible(true);
-            }
-            if (e.getSource() == gui.getBuyButton()) {
-                buyFrame.setVisible(true);
-            }
-            if (e.getSource() == gui.getQuitButton()) {
-                gui.setVisible(false);
-                System.exit(1);
-            }
-        }
     }
 
     /**
@@ -166,13 +125,17 @@ public class GuiController {
 
             if(e.getSource()==loginFrame.getOkButton()){
                 loginFrame.setVisible(false);
-                if(!loginFrame.getUsername().getText().equals("") || !loginFrame.getPassword().getText().equals("")) {
+                if(loginFrame.getUsername().getText().equals("") || loginFrame.getPassword().getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Wrong username or password", "Incorrect Login", JOptionPane.PLAIN_MESSAGE);
+                    loginFrame.setVisible(true);
+                } else {
                     input = "0," + loginFrame.getUsername().getText() + "," + loginFrame.getPassword().getText();
                     client.communicate(input);
                 }
             }
             if(e.getSource()==loginFrame.getCancelButton()){
                 loginFrame.setVisible(false);
+                System.exit(1);
             }
             //END OF LOGIN BUTTONS FUNCTIONS
         }

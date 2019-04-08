@@ -1,6 +1,8 @@
 package Client;
 
 import Client.GUI.*;
+import Client.GUI.Controller.MainController;
+import Client.GUI.Controller.ToolController;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -18,35 +20,22 @@ import java.net.Socket;
  * @since April 4, 2019
  */
 public class Client {
-
     /**
      * The main window of the GUI
      */
     private MainFrame gui;
     /**
-     * The frame that asks user to enter in a tool ID
+     * Listeners for main frame of GUI
      */
-    private ToolGetFrame toolID;
+    private MainController mainController;
     /**
-     * The frame that asks user to enter in a tool name
+     * Listeners for tool frames
      */
-    private ToolGetFrame toolName;
+    private ToolController toolController;
     /**
-     * The frame that asks user which tool they want to buy
+     * List of tool frames
      */
-    private ToolGetFrame buyTool;
-    /**
-     * The frame that asks user which tool they want to check the quantity of
-     */
-    private ToolGetFrame checkQuantity;
-    /**
-     * The frame that asks user for username and password
-     */
-    private UserFrame login;
-    /**
-     * The controller that connects all the buttons to their listeners
-     */
-    private GuiController controller;
+    private ListToolFrame toolList;
     /**
      * The PrintWriter used to write into the socket.
      */
@@ -71,19 +60,15 @@ public class Client {
      */
     public Client(String serverName, int portNumber) {
         try {
-
             aSocket = new Socket(serverName, portNumber);
             stdIn = new BufferedReader(new InputStreamReader(System.in));
             socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
             socketOut = new PrintWriter((aSocket.getOutputStream()), true);
 
             gui = new MainFrame();
-            toolID = new ToolGetFrame("ID");
-            toolName = new ToolGetFrame("NAME");
-            buyTool = new ToolGetFrame("NAME");
-            checkQuantity = new ToolGetFrame("NAME");
-            login = new UserFrame();
-            controller = new GuiController(gui, toolName, toolID, checkQuantity, buyTool, login, this);
+            toolList = new ListToolFrame();
+            mainController = new MainController(gui, toolList, this);
+            toolController = new ToolController(toolList, this);
 
         } catch (IOException e) {
             System.err.println("Error constructing client");
@@ -98,13 +83,11 @@ public class Client {
         String f;
         String[] number = s.split(",");
         try {
-             socketOut.println(s);
-
+            socketOut.println(s);
             while (!(f = socketIn.readLine()).equals("\0")) {
                 content.append(f);
                 content.append(System.lineSeparator());
             }
-            //System.out.println(content.toString());
             clientFunction(content.toString(), Integer.parseInt(number[0]));
         } catch (IOException e) {
             System.err.println("Error communicating in Client");
@@ -121,8 +104,8 @@ public class Client {
             if(decode.charAt(0)=='t')
                 gui.setVisible(true);
             else {
-                JOptionPane.showMessageDialog(null, "Incorrect Login", "Wrong username or password", JOptionPane.PLAIN_MESSAGE);
-                login.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Wrong username or password", "Incorrect Login", JOptionPane.PLAIN_MESSAGE);
+                toolList.getLoginFrame().setVisible(true);
             }
         }
         else if (caseNum == 1) {
@@ -135,8 +118,8 @@ public class Client {
     }
 
     public static void main(String[] args){
-        //Client aClient = new Client("10.13.84.113", 44612); //Used to connect two laptops
+        //Client aClient = new Client("10.13.141.52", 44612); //Used to connect two laptops
         Client aClient = new Client("localhost", 9090);
-        aClient.login.setVisible(true);
+        aClient.toolList.getLoginFrame().setVisible(true);
     }
 }
