@@ -4,7 +4,6 @@ import Client.Client;
 import Client.GUI.ListToolFrame;
 import Client.GUI.MainFrame;
 import Client.GUI.ToolGetFrame;
-import Client.GUI.UserFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,10 +40,6 @@ public class MainController {
      * The frame created when the search ID button is pressed
      */
     private ToolGetFrame idFrame;
-    /**
-     * The frame created to login to Tool Shop
-     */
-    private UserFrame loginFrame;
 
     /**
      * Constructs an object of type MainController
@@ -58,7 +53,6 @@ public class MainController {
         idFrame = t.getIdFrame();
         quantityFrame = t.getQuantityFrame();
         buyFrame = t.getBuyFrame();
-        loginFrame = t.getLoginFrame();
         gui.addAllListeners(new MainListener());
         client = c;
     }

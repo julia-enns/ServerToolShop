@@ -69,6 +69,21 @@ public class Item {
 	}
 
 	/**
+	 * Decreases item quantity
+	 * @param number amount being bought
+	 * @return true if item was decreases
+	 */
+	public boolean buyItemQuantity (int number) {
+		if (itemQuantity > 0) {
+			itemQuantity = itemQuantity - number;
+			return true;
+		}
+		else
+			return false;
+
+	}
+
+	/**
 	 * Places an order for an item
 	 * @return order line made for item
 	 */
@@ -133,5 +148,9 @@ public class Item {
  	 */
 	public void setAlreadyOrdered(boolean alreadyOrdered) {
 		this.alreadyOrdered = alreadyOrdered;
+	}
+
+	public double getItemPrice() {
+		return itemPrice;
 	}
 }

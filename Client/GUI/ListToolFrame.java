@@ -22,6 +22,8 @@ public class ListToolFrame {
      */
     private UserFrame loginFrame;
 
+    private UserTypeFrame choiceFrame;
+
     /**
      * Constructs an object of type ListToolFrame
      */
@@ -31,6 +33,7 @@ public class ListToolFrame {
         buyFrame = new ToolGetFrame("NAME");
         quantityFrame = new ToolGetFrame("NAME");
         loginFrame = new UserFrame();
+        choiceFrame = new UserTypeFrame();
     }
 
     public ToolGetFrame getBuyFrame() {
@@ -51,5 +54,9 @@ public class ListToolFrame {
 
     public UserFrame getLoginFrame() {
         return loginFrame;
+    }
+
+    public UserTypeFrame getChoiceFrame() {
+        return choiceFrame;
     }
 }

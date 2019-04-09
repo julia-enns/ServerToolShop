@@ -40,9 +40,24 @@ public class Shop {
 	 */
 	public String decreaseItem (String name) {
 		if (theInventory.manageItem(name) == null)
-			return "Couldn't not decrease item quantity!\n";
+			return "Couldn't decrease item quantity!\n";
 		else
 			return name + " quantity was decreased!\n";
+	}
+
+	/**
+	 * Decreases an item
+	 * @param name item being decreased
+	 * @return String of item quantity
+	 */
+	public String buyItem (String name, int number) {
+		Item item;
+		if ((item =theInventory.manageBoughtItem(name, number)) == null)
+			return "Couldn't buy item!\n";
+		else {
+			String output = String.format(" has been bought!\n$%.2f is the total of your purchase.\n", (item.getItemPrice() * number));
+			return name + output;
+		}
 	}
 
 	/**

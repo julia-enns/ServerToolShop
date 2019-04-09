@@ -39,6 +39,20 @@ public class Inventory {
 	}
 
 	/**
+	 * Manages an item
+	 * @param name tool being managed
+	 * @return tool
+	 */
+	public Item manageBoughtItem (String name, int amount){
+		Item theItem = buyItem (name, amount);
+
+		if (theItem != null){
+			placeOrder (theItem);
+		}
+		return theItem;
+	}
+
+	/**
 	 * Places order for an item
 	 * @param theItem item being ordered
 	 */
@@ -63,6 +77,24 @@ public class Inventory {
 		
 		if (theItem.decreaseItemQuantity()){
 			
+			return theItem;
+		}
+		return null;
+	}
+
+	/**
+	 * Decreases the item specified by a certain amount
+	 * @param name tool being decreased
+	 * @param number amount being bought
+	 * @return item info
+	 */
+	private Item buyItem(String name, int number){
+		Item theItem = searchForItem (name);
+
+		if (theItem == null)
+			return null;
+
+		if (theItem.buyItemQuantity(number)){
 			return theItem;
 		}
 		return null;

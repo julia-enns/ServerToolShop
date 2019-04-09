@@ -1,9 +1,7 @@
 package Client.GUI.Controller;
 
 import Client.Client;
-import Client.GUI.ListToolFrame;
-import Client.GUI.ToolGetFrame;
-import Client.GUI.UserFrame;
+import Client.GUI.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -42,22 +40,30 @@ public class ToolController {
      */
     private UserFrame loginFrame;
 
+    private UserTypeFrame choiceFrame;
+
+    private CustomerFrame customerFrame;
+
     /**
      * Constructs an object of type ToolController
      * @param t list of tool frames in the GUI
      * @param c the client that connects to the GUI
      */
-    public ToolController(ListToolFrame t, Client c){
+    public ToolController(CustomerFrame cust, ListToolFrame t, Client c){
         nameFrame = t.getNameFrame();
         idFrame = t.getIdFrame();
         quantityFrame = t.getQuantityFrame();
         buyFrame = t.getBuyFrame();
         loginFrame = t.getLoginFrame();
+        choiceFrame = t.getChoiceFrame();
+        customerFrame = cust;
+
         nameFrame.addAllListeners(new ToolListener());
         idFrame.addAllListeners(new ToolListener());
         buyFrame.addAllListeners(new ToolListener());
         quantityFrame.addAllListeners(new ToolListener());
         loginFrame.addAllListeners(new ToolListener());
+        choiceFrame.addAllListeners(new ToolListener());
 
         client = c;
     }
@@ -138,6 +144,16 @@ public class ToolController {
                 System.exit(1);
             }
             //END OF LOGIN BUTTONS FUNCTIONS
+
+            if(e.getSource()==choiceFrame.getEmpButton()){
+                choiceFrame.setVisible(false);
+                loginFrame.setVisible(true);
+            }
+            if(e.getSource()==choiceFrame.getCustButton()){
+                choiceFrame.setVisible(false);
+                customerFrame.setVisible(true);
+            }
+            //END OF CHOICE BUTTONS FUNCTIONS
         }
     }
 }

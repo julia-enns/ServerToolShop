@@ -10,35 +10,25 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
- * The Server reads an input from the cleint and sends an output back to the client
+ * The Server reads an input from the client and sends an output back to the client
  *
  * @author Julia Grab, Kacper Porebski
  * @version 1.0
  * @since April 4, 2019
  */
-public class Server {
+public class Server{
     /**
      * List of logins
      */
     private String[][] login;
     /**
-     *Buffered reader that reads from the server
-     */
-    private BufferedReader socketInput;
-    /**
-     * Print Writer the sends output to server
-     */
-    private PrintWriter socketOutput;
-    /**
      * Server socket the server is connected to
      */
     private ServerSocket serverSocket;
-    /**
-     * The socket that connects the client and the server
-     */
-    private Socket aSocket;
     /**
      * List of the suppliers
      */
@@ -51,6 +41,11 @@ public class Server {
      * The tool shop
      */
     private Shop theShop;
+    /**
+     * Thread pool
+     */
+    private ExecutorService pool;
+
 
     /**
      * Construct a Server with Port 9090
@@ -65,9 +60,7 @@ public class Server {
             //serverSocket = new ServerSocket(44612); //Used to connect two laptops
             serverSocket = new ServerSocket(9090);
             System.out.println("Server is now running.");
-            aSocket = serverSocket.accept();
-            socketInput = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
-            socketOutput = new PrintWriter(aSocket.getOutputStream(), true);
+            pool = Executors.newCachedThreadPool();
             makeLogin();
         } catch (IOException e) {
             System.err.println("Error constructing Server");
@@ -75,62 +68,17 @@ public class Server {
     }
 
     /**
-     * Get input from Client.
+     * Executes a thread pool
      *
      */
     public void getUserInput(){
-        StringBuffer line;
         try {
             while (true) {
-                line = new StringBuffer(socketInput.readLine());
-                String message = line.toString();
-                String[] decodedMsg = message.split(",");
-                serverFunction(decodedMsg);
+                Choice choose = new Choice(login, theShop, serverSocket);
+                pool.execute(choose);
             }
-        } catch (IOException e){
-            System.err.println("Error getting user input");
-        }
-    }
-
-    /**
-     * Chooses what is sent to the client depending on which button was pressed
-     * @param decode choice number made and input sent in
-     */
-    private void serverFunction(String[] decode){
-        switch(Integer.parseInt(decode[0])){
-            case 0:
-                for(int i=0; i < 2; i++) {
-                    if (decode[1].equals(login[i][0])) {
-                        if (decode[2].equals(login[i][1])) {
-                            socketOutput.println("true"+"\n\0");
-                            return;
-                        }
-                    }
-                }
-                socketOutput.println("false"+"\n\0");
-                break;
-            case 1:
-                socketOutput.println(theShop.listAllItems() + "\n\0");
-                break;
-            case 2:
-                socketOutput.println(theShop.getItem(decode[1]) + "\n\0");
-                break;
-            case 3:
-                try {
-                    socketOutput.println(theShop.getItem(Integer.parseInt(decode[1])) + "\n\0");
-                    break;
-                } catch(NumberFormatException e){
-                    socketOutput.print("");
-                }
-            case 4:
-                socketOutput.println(theShop.getItemQuantity(decode[1])+"\n\0");
-                break;
-            case 5:
-                socketOutput.println(theShop.decreaseItem(decode[1])+"\n\0");
-                break;
-            case 6:
-                socketOutput.println(theShop.printOrder()+"\n\0");
-                break;
+        } catch (Exception e){
+            pool.shutdown();
         }
     }
 
@@ -165,7 +113,7 @@ public class Server {
             FileReader fr = new FileReader("milestone-1\\items.txt");
             BufferedReader br = new BufferedReader(fr);
 
-            String line = "";
+            String line;
             while ((line = br.readLine()) != null) {
                 String[] temp = line.split(";");
                 int supplierId = Integer.parseInt(temp[4]);

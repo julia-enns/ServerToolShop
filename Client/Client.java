@@ -1,6 +1,7 @@
 package Client;
 
 import Client.GUI.*;
+import Client.GUI.Controller.CustomerController;
 import Client.GUI.Controller.MainController;
 import Client.GUI.Controller.ToolController;
 
@@ -24,6 +25,7 @@ public class Client {
      * The main window of the GUI
      */
     private MainFrame gui;
+    private CustomerFrame customer;
     /**
      * Listeners for main frame of GUI
      */
@@ -32,6 +34,8 @@ public class Client {
      * Listeners for tool frames
      */
     private ToolController toolController;
+
+    private CustomerController customerController;
     /**
      * List of tool frames
      */
@@ -45,13 +49,11 @@ public class Client {
      */
     private Socket aSocket;
     /**
-     * The reader used to read from console.
-     */
-    private BufferedReader stdIn;
-    /**
      * The reader used to read from the socket.
      */
     private BufferedReader socketIn;
+
+    private BuyFrame buy;
 
     /**
      * Constructs the client.
@@ -61,14 +63,16 @@ public class Client {
     public Client(String serverName, int portNumber) {
         try {
             aSocket = new Socket(serverName, portNumber);
-            stdIn = new BufferedReader(new InputStreamReader(System.in));
             socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
             socketOut = new PrintWriter((aSocket.getOutputStream()), true);
 
             gui = new MainFrame();
             toolList = new ListToolFrame();
+            customer = new CustomerFrame();
+            buy = new BuyFrame();
+            customerController = new CustomerController(this, customer, buy);
             mainController = new MainController(gui, toolList, this);
-            toolController = new ToolController(toolList, this);
+            toolController = new ToolController(customer, toolList, this);
 
         } catch (IOException e) {
             System.err.println("Error constructing client");
@@ -113,13 +117,21 @@ public class Client {
             String[] tools = decode.split("\n");
             for (String s : tools)
                 gui.getToolList().addElement(s);
-        } else
+        }
+        else if(caseNum == 7){
+            customer.getToolList().clear();
+            String[] tools = decode.split("\n");
+            for (String s : tools)
+                customer.getToolList().addElement(s);
+        }
+        else
             JOptionPane.showMessageDialog(null, decode, "Message", JOptionPane.PLAIN_MESSAGE);
     }
 
     public static void main(String[] args){
         //Client aClient = new Client("10.13.141.52", 44612); //Used to connect two laptops
         Client aClient = new Client("localhost", 9090);
-        aClient.toolList.getLoginFrame().setVisible(true);
+        //aClient.gui.setVisible(true);
+       aClient.toolList.getChoiceFrame().setVisible(true);
     }
 }
