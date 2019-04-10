@@ -73,7 +73,7 @@ public class Server{
      */
     public void getUserInput(){
         try {
-            while (true) {
+           while (true) {
                 Choice choose = new Choice(login, theShop, serverSocket);
                 pool.execute(choose);
             }

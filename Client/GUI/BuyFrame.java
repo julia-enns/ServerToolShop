@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Frame that allows a customer to buy a tool
+ */
 public class BuyFrame extends JFrame {
 
     /**
@@ -18,10 +21,13 @@ public class BuyFrame extends JFrame {
      * Field for user input
      */
     private JTextField input = new JTextField(15);
+    /**
+     * Field for amount of tool being bought
+     */
     private JTextField quantity = new JTextField(15);
 
     /**
-     * Constructs the GUI frame
+     * Constructs the buy frame
      */
     public BuyFrame(){
         this.setTitle("Read");
@@ -38,6 +44,10 @@ public class BuyFrame extends JFrame {
         return input;
     }
 
+    /**
+     * Getter for the quantity field
+     * @return the quantity field
+     */
     public JTextField getQuantity() {
         return quantity;
     }

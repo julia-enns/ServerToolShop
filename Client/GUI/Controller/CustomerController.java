@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Main listeners in the GUI
+ * Customer listeners in the GUI
  */
 public class CustomerController {
     private Client client;
@@ -18,8 +18,10 @@ public class CustomerController {
    private BuyFrame buyFrame;
 
     /**
-     * Constructs an object of type MainController
+     * Constructs an object of type CustomerController
      * @param c the client that connects to the GUI
+     * @param customer the CustomerFrame being connected to
+     * @param buy the buy frame
      */
    public CustomerController(Client c, CustomerFrame customer, BuyFrame buy){
        client = c;
@@ -30,7 +32,7 @@ public class CustomerController {
     }
 
     /**
-     * Creates listeners for the main GUI buttons
+     * Creates listeners for the customer GUI buttons
      */
     class MainListener implements ActionListener {
         @Override

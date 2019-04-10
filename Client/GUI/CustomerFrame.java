@@ -92,7 +92,6 @@ public class CustomerFrame extends JFrame{
         quitButton.addActionListener(listener);
     }
 
-
     public JButton getBrowseButton() {
         return browseButton;
     }

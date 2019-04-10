@@ -25,6 +25,9 @@ public class Client {
      * The main window of the GUI
      */
     private MainFrame gui;
+    /**
+     * The customer window of the GUI
+     */
     private CustomerFrame customer;
     /**
      * Listeners for main frame of GUI
@@ -34,7 +37,9 @@ public class Client {
      * Listeners for tool frames
      */
     private ToolController toolController;
-
+    /**
+     * Listeners for customer frame
+     */
     private CustomerController customerController;
     /**
      * List of tool frames
@@ -52,7 +57,9 @@ public class Client {
      * The reader used to read from the socket.
      */
     private BufferedReader socketIn;
-
+    /**
+     * The buy window of the GUI
+     */
     private BuyFrame buy;
 
     /**
@@ -131,7 +138,6 @@ public class Client {
     public static void main(String[] args){
         //Client aClient = new Client("10.13.141.52", 44612); //Used to connect two laptops
         Client aClient = new Client("localhost", 9090);
-        //aClient.gui.setVisible(true);
-       aClient.toolList.getChoiceFrame().setVisible(true);
+        aClient.toolList.getChoiceFrame().setVisible(true);
     }
 }

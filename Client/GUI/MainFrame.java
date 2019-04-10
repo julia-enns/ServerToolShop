@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
     /**
      * Buy Item button
      */
-    private JButton buyButton = new JButton("Buy Item");
+    private JButton buyButton = new JButton("Decrease Stock");
     /**
      * List shown when List All Tool button is pressed
      */
