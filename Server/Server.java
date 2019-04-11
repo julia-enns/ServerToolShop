@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  * @since April 4, 2019
  */
 public class Server{
-    MySQL database = new MySQL();
+    private MySQL database = new MySQL();
     /**
      * List of logins
      */
@@ -53,10 +53,6 @@ public class Server{
      * Construct a Server with Port 9090
      */
     public Server() {
-        suppliers = new ArrayList<>();
-        serverReadSuppliers();
-        theInventory = new Inventory(serverReadItems());
-        theShop = new Shop(theInventory, suppliers);
 
         try {
             //serverSocket = new ServerSocket(44612); //Used to connect two laptops
@@ -76,7 +72,7 @@ public class Server{
     public void getUserInput(){
         try {
            while (true) {
-                Choice choose = new Choice(login, theShop, serverSocket);
+                Choice choose = new Choice(login, this, serverSocket);
                 pool.execute(choose);
             }
         } catch (Exception e){
@@ -96,7 +92,7 @@ public class Server{
             String line;
             while ((line = br.readLine()) != null) {
                 String[] temp = line.split(";");
-                suppliers.add(new Supplier(Integer.parseInt(temp[0]), temp[1], temp[2], temp[3]));
+                database.insertSupplier(Integer.parseInt(temp[0]), temp[1], temp[2], temp[3]);
             }
         } catch (Exception e) {
             System.out.println("Error reading in the list of suppliers");
@@ -107,9 +103,7 @@ public class Server{
      * Reads in the list of items to the shop
      * @return list of items
      */
-    private ArrayList<Item> serverReadItems() {
-
-        ArrayList<Item> items = new ArrayList<>();
+    private void serverReadItems() {
 
         try {
             FileReader fr = new FileReader("src\\items.txt");
@@ -118,20 +112,14 @@ public class Server{
             String line;
             while ((line = br.readLine()) != null) {
                 String[] temp = line.split(";");
-                int supplierId = Integer.parseInt(temp[4]);
-
-                Supplier theSupplier = findSupplier(supplierId);
-                if (theSupplier != null) {
-                    Item myItem = new Item(Integer.parseInt(temp[0]), temp[1], Integer.parseInt(temp[2]),
-                            Double.parseDouble(temp[3]), theSupplier);
-                    items.add(myItem);
-                    theSupplier.getItemList().add(myItem);
+                 Integer.parseInt(temp[4]);
+                 database.insertToolPrepared(Integer.parseInt(temp[0]), temp[1], Integer.parseInt(temp[2]),
+                            Double.parseDouble(temp[3]), Integer.parseInt(temp[4]));
                 }
             }
-        } catch (Exception e) {
+         catch (Exception e) {
             System.out.println("Error reading in the list of items");
         }
-        return items;
     }
 
     /**
@@ -169,6 +157,9 @@ public class Server{
         Server ds = new Server();
         ds.getDatabase().connect();
         ds.getDatabase().createTables();
+        ds.serverReadItems();
+        ds.serverReadSuppliers();
+        ds.getDatabase().decreaseItem("Widgets");
         ds.getUserInput();
 
     }

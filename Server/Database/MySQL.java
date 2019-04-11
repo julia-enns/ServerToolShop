@@ -47,10 +47,9 @@ public class MySQL implements DatabaseCreds {
            pState.setDouble(4,price);
            pState.setInt(5,supplierID);
            int rowCount = pState.executeUpdate();
-           System.out.println("Row count: " + rowCount);
            pState.close();
         }catch (SQLException e){
-            System.err.println("Error inserting tool");
+
         }
     }
 
@@ -65,7 +64,7 @@ public class MySQL implements DatabaseCreds {
             int rowCount = pState.executeUpdate();
             pState.close();
         }catch (SQLException e){
-            System.err.println("Error inserting supplier");
+
         }
 
     }
@@ -73,6 +72,29 @@ public class MySQL implements DatabaseCreds {
     public void createTables(){
         createToolTable();
         createSupplierTable();
+        createOrderTable();
+    }
+
+    private void createOrderTable(){
+        try{
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet rs = meta.getTables(null, null, "order", null );
+            if(rs.next()==false) {
+
+                String sql = "CREATE TABLE order " + "date VARCHAR(255), " + "orderid INTEGER not NULL, " +
+                        "toolname VARCHAR(255), " + "quantity INTEGER not NULL, " + "PRIMARY KEY (orderid)";
+
+                Statement st = conn.createStatement();
+                st.executeUpdate(sql);
+                st.close();
+                System.out.println("Order table created");
+            }
+            else
+                System.out.println("Order tool already exists");
+        }catch (SQLException e){
+            System.out.println("Cant create order table");
+        }
+
     }
 
     private void createToolTable(){
@@ -118,7 +140,110 @@ public class MySQL implements DatabaseCreds {
 
     }
 
+    public String printAllTools(){
+        String s = "";
+        try{
+            Statement stmt = conn.createStatement();
+            String query = "SELECT * FROM tool";
+            rs=stmt.executeQuery(query);
+            while(rs.next()){
+                s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
+                 + " " + rs.getString(4) + " " + rs.getString(5);
+            }
+            stmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return s;
+    }
 
+    public String getTool(String name){
+        String s = "";
+        try{
+            String query = "SELECT * FROM tool where name= ?";
+            PreparedStatement pStmt = conn.prepareStatement(query);
+            pStmt.setString(1, name);
+            rs= pStmt.executeQuery();
+            while (rs.next()){
+                s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
+                        + " " + rs.getString(4) + " " + rs.getString(5);
+            }
+            pStmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return s;
+    }
+
+    public String getTool(int id){
+        String s = "";
+        try{
+            String query = "SELECT * FROM tool where id= ?";
+            PreparedStatement pStmt = conn.prepareStatement(query);
+            pStmt.setInt(1, id);
+            rs= pStmt.executeQuery();
+            while (rs.next()){
+                s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
+                        + " " + rs.getString(4) + " " + rs.getString(5);
+            }
+            pStmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return s;
+    }
+
+    public String getQuantity(String name) {
+        String s = "";
+        try {
+            String query = "SELECT * FROM tool where name= ?";
+            PreparedStatement pStmt = conn.prepareStatement(query);
+            pStmt.setString(1, name);
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                s += "The quantity for "+ rs.getString(2) +" is: " + rs.getString(3);
+            }
+            pStmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+        return s;
+    }
+
+    public String decreaseItem(String name){
+        try {
+            String query = "SELECT * FROM tool where name= ?";
+            PreparedStatement pStmt = conn.prepareStatement(query);
+            pStmt.setString(1, name);
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                String query2 = "UPDATE tool SET quantity= ? WHERE name= ?";
+                PreparedStatement pStmt2 = conn.prepareStatement(query2);
+                pStmt2.setInt(1, Integer.parseInt(rs.getString(3))-1);
+                pStmt2.setString(2,name);
+                pStmt2.executeUpdate();
+                pStmt2.close();
+                if(Integer.parseInt(rs.getString(3) ) < 40 ){
+                    makeOrder(name);
+                }
+            }
+            pStmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Quantity failed to be decreased.";
+        }
+        return "Quantity successfully decreased.";
+    }
+
+    private void makeOrder(String name){
+    //TODO
+    }
+
+    private void buyItem(String name, int amount){
+
+
+    }
 }
 
 
