@@ -1,5 +1,6 @@
 package Server;
 
+import Server.Database.MySQL;
 import Server.Model.Inventory;
 import Server.Model.Item;
 import Server.Model.Shop;
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
  * @since April 4, 2019
  */
 public class Server{
+    MySQL database = new MySQL();
     /**
      * List of logins
      */
@@ -88,7 +90,7 @@ public class Server{
     private void serverReadSuppliers() {
 
         try {
-            FileReader fr = new FileReader("milestone-1\\suppliers.txt");
+            FileReader fr = new FileReader("src\\suppliers.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
@@ -110,7 +112,7 @@ public class Server{
         ArrayList<Item> items = new ArrayList<>();
 
         try {
-            FileReader fr = new FileReader("milestone-1\\items.txt");
+            FileReader fr = new FileReader("src\\items.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line;
@@ -159,9 +161,16 @@ public class Server{
         return theSupplier;
     }
 
+    public MySQL getDatabase() {
+        return database;
+    }
+
     public static void main(String[] args){
         Server ds = new Server();
+        ds.getDatabase().connect();
+        ds.getDatabase().createTables();
         ds.getUserInput();
+
     }
 }
 
