@@ -201,7 +201,7 @@ public class MySQL implements DatabaseCreds {
             pStmt.setString(1, name);
             rs = pStmt.executeQuery();
             while (rs.next()) {
-                s += "The quantity for "+ rs.getString(2) +" is: " + rs.getString(3);
+                s += "The quantity for "+ rs.getString(2) +" is: " + rs.getString(3) + "\n";
             }
             pStmt.close();
         } catch (SQLException e) {
