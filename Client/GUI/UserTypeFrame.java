@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Makes a frame to ask user to select what type of person they are
+ */
 public class UserTypeFrame extends JFrame {
     /**
      * OK button
@@ -56,10 +59,18 @@ public class UserTypeFrame extends JFrame {
         empButton.addActionListener(listener);
     }
 
+    /**
+     * Returns the customer button
+     * @return customer button
+     */
     public JButton getCustButton() {
         return custButton;
     }
 
+    /**
+     * Returns the employee button
+     * @return employee button
+     */
     public JButton getEmpButton() {
         return empButton;
     }

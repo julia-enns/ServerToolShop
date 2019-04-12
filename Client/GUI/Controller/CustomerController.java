@@ -12,10 +12,22 @@ import java.awt.event.ActionListener;
  * Customer listeners in the GUI
  */
 public class CustomerController {
+    /**
+     * Client that is connected
+     */
     private Client client;
-   private CustomerFrame gui;
-   private String input;
-   private BuyFrame buyFrame;
+    /**
+     * The GUI the listeners are being attached to
+     */
+    private CustomerFrame gui;
+    /**
+     * The input being sent to the server
+     */
+    private String input;
+    /**
+     * The frame that allows customer to buy tools
+     */
+    private BuyFrame buyFrame;
 
     /**
      * Constructs an object of type CustomerController
@@ -65,5 +77,4 @@ public class CustomerController {
             }
         }
     }
-
 }
