@@ -180,6 +180,15 @@ public class Server{
         toolSQL.createToolTable();
     }
 
+    /**
+     * Closes the connections to database
+     */
+    public void closeConnections(){
+        orderSQl.closeConnection();
+        supplierSQL.closeConnection();
+        toolSQL.closeConnection();
+    }
+
     public static void main(String[] args){
         Server ds = new Server();
         ds.connectToDatabase();
@@ -187,6 +196,7 @@ public class Server{
         ds.serverReadItems();
         ds.serverReadSuppliers();
         ds.getUserInput();
+        ds.closeConnections();
 
     }
 }
