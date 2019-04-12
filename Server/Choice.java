@@ -78,36 +78,36 @@ public class Choice implements Runnable {
                         socketOutput.println("false" + "\n\0");
                         break;
                     case 1:
-                        socketOutput.println(theServer.getDatabase().printAllTools() + "\n\0");
+                        socketOutput.println(theServer.getToolSQL().printAllTools() + "\n\0");
                         break;
                     case 2:
-                        socketOutput.println(theServer.getDatabase().getTool(decode[1]) + "\n\0");
+                        socketOutput.println(theServer.getToolSQL().getTool(decode[1]) + "\n\0");
                         break;
                     case 3:
                         try {
-                            socketOutput.println(theServer.getDatabase().getTool(Integer.parseInt(decode[1])) + "\n\0");
+                            socketOutput.println(theServer.getToolSQL().getTool(Integer.parseInt(decode[1])) + "\n\0");
                             break;
                         } catch (NumberFormatException e) {
                             socketOutput.print("");
                         }
                     case 4:
-                        socketOutput.println(theServer.getDatabase().getQuantity(decode[1]) + "\n\0");
+                        socketOutput.println(theServer.getToolSQL().getQuantity(decode[1]) + "\n\0");
                         break;
                     case 5:
-                        socketOutput.println(theServer.getDatabase().decreaseItem(decode[1]) + "\n\0");
+                        socketOutput.println(theServer.getToolSQL().decreaseItem(decode[1],theServer.getOrderSQl()) + "\n\0");
                         break;
                     case 6:
-                        socketOutput.println(theServer.getDatabase().printOrder() + "\n\0");
+                        socketOutput.println(theServer.getOrderSQl().printOrder() + "\n\0");
                         break;
                     case 7:
-                        socketOutput.println(theServer.getDatabase().printAllTools() + "\n\0");
+                        socketOutput.println(theServer.getToolSQL().printAllTools() + "\n\0");
                         break;
                     case 8:
                         try {
-                            socketOutput.println(theServer.getDatabase().buyItem(decode[1], Integer.parseInt(decode[2])) + "\n\0");
+                            socketOutput.println(theServer.getToolSQL().buyItem(decode[1], Integer.parseInt(decode[2]), theServer.getOrderSQl()) + "\n\0");
                             break;
                         } catch (NumberFormatException e){
-                            socketOutput.println(theServer.getDatabase().buyItem("", 0) + "\n\0");
+                            socketOutput.println(theServer.getToolSQL().buyItem("", 0, theServer.getOrderSQl()) + "\n\0");
                         }
                 }
             }

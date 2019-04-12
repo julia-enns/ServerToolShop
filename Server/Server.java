@@ -1,6 +1,9 @@
 package Server;
 
 import Server.Database.MySQL;
+import Server.Database.OrderSQL;
+import Server.Database.SupplierSQL;
+import Server.Database.ToolSQL;
 import Server.Model.Inventory;
 import Server.Model.Item;
 import Server.Model.Shop;
@@ -22,7 +25,9 @@ import java.util.concurrent.Executors;
  * @since April 4, 2019
  */
 public class Server{
-    private MySQL database = new MySQL();
+    private ToolSQL toolSQL = new ToolSQL();
+    private OrderSQL orderSQl = new OrderSQL();
+    private SupplierSQL supplierSQL = new SupplierSQL();
     /**
      * List of logins
      */
@@ -92,7 +97,7 @@ public class Server{
             String line;
             while ((line = br.readLine()) != null) {
                 String[] temp = line.split(";");
-                database.insertSupplier(Integer.parseInt(temp[0]), temp[1], temp[2], temp[3]);
+                supplierSQL.insertSupplier(Integer.parseInt(temp[0]), temp[1], temp[2], temp[3]);
             }
         } catch (Exception e) {
             System.out.println("Error reading in the list of suppliers");
@@ -113,7 +118,7 @@ public class Server{
             while ((line = br.readLine()) != null) {
                 String[] temp = line.split(";");
                  Integer.parseInt(temp[4]);
-                 database.insertToolPrepared(Integer.parseInt(temp[0]), temp[1], Integer.parseInt(temp[2]),
+                 toolSQL.insertToolPrepared(Integer.parseInt(temp[0]), temp[1], Integer.parseInt(temp[2]),
                             Double.parseDouble(temp[3]), Integer.parseInt(temp[4]));
                 }
             }
@@ -133,30 +138,33 @@ public class Server{
         login[1][1] = "2";
     }
 
-    /**
-     * Searches through the list of the suppliers
-     * @param supplierId supplied ID being searched for
-     * @return the supplier information
-     */
-    private Supplier findSupplier(int supplierId) {
-        Supplier theSupplier = null;
-        for (Supplier s : suppliers) {
-            if (s.getSupId() == supplierId) {
-                theSupplier = s;
-                break;
-            }
-        }
-        return theSupplier;
+    public OrderSQL getOrderSQl() {
+        return orderSQl;
     }
 
-    public MySQL getDatabase() {
-        return database;
+    public SupplierSQL getSupplierSQL() {
+        return supplierSQL;
+    }
+
+    public ToolSQL getToolSQL() {
+        return toolSQL;
+    }
+
+    public void connectToDatabase(){
+        orderSQl.connect();
+        supplierSQL.connect();
+        toolSQL.connect();
+    }
+    public void createTables(){
+        orderSQl.createOrderTable();
+        supplierSQL.createSupplierTable();
+        toolSQL.createToolTable();
     }
 
     public static void main(String[] args){
         Server ds = new Server();
-        ds.getDatabase().connect();
-        ds.getDatabase().createTables();
+        ds.connectToDatabase();
+        ds.createTables();
         ds.serverReadItems();
         ds.serverReadSuppliers();
         ds.getUserInput();
