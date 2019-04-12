@@ -39,13 +39,18 @@ public class ToolController {
      * The frame created to login to Tool Shop
      */
     private UserFrame loginFrame;
-
+    /**
+     * The frame that shows up to allow user to choose which GUI to go to
+     */
     private UserTypeFrame choiceFrame;
-
+    /**
+     * The frame that opens options for a customer to buy tools
+     */
     private CustomerFrame customerFrame;
 
     /**
      * Constructs an object of type ToolController
+     * @param cust the customer frame in the GUI
      * @param t list of tool frames in the GUI
      * @param c the client that connects to the GUI
      */

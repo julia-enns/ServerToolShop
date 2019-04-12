@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
  * Frame that allows a customer to buy a tool
  */
 public class BuyFrame extends JFrame {
-
     /**
      * OK button
      */

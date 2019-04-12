@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Makes a frame that allows a customer to buy tools
+ */
 public class CustomerFrame extends JFrame{
 
     /**
@@ -18,7 +21,6 @@ public class CustomerFrame extends JFrame{
      * Tool Name button
      */
     private JButton buyButton = new JButton("Select a Tool to Buy");
-
     /**
      * List shown when List All Tool button is pressed
      */
@@ -33,7 +35,7 @@ public class CustomerFrame extends JFrame{
     private JScrollPane listScrollPane;
 
     /**
-     * Constructs the main GUI window.
+     * Constructs the customer GUI window.
      */
     public CustomerFrame() {
         this.setTitle("Customer Window");
@@ -92,19 +94,34 @@ public class CustomerFrame extends JFrame{
         quitButton.addActionListener(listener);
     }
 
+    /**
+     * Returns the browse button
+     * @return browse button
+     */
     public JButton getBrowseButton() {
         return browseButton;
     }
 
+    /**
+     * Returns the buy button
+     * @return buy button
+     */
     public JButton getBuyButton() {
         return buyButton;
     }
 
-
+    /**
+     * Returns the quit button
+     * @return quit button
+     */
     public JButton getQuitButton() {
         return quitButton;
     }
 
+    /**
+     * Returns the tool list
+     * @return tool list
+     */
     public DefaultListModel<String> getToolList() {
         return toolList;
     }
