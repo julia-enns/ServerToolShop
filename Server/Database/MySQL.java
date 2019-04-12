@@ -147,8 +147,10 @@ public class MySQL implements DatabaseCreds {
             String query = "SELECT * FROM tool";
             rs=stmt.executeQuery(query);
             while(rs.next()){
-                s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
-                 + " " + rs.getString(4) + " " + rs.getString(5) + "\n";
+                s+=String.format("%-10s %-20s %-10s $%-10s %-10s\n", rs.getString(1),
+                        rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+               // s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
+               //  + " " + rs.getString(4) + " " + rs.getString(5) + "\n";
             }
             stmt.close();
         }catch (SQLException e){
@@ -165,8 +167,8 @@ public class MySQL implements DatabaseCreds {
             pStmt.setString(1, name);
             rs= pStmt.executeQuery();
             while (rs.next()){
-                s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
-                        + " " + rs.getString(4) + " " + rs.getString(5);
+                s+= "ID: " + rs.getString(1) + "   Name: " + rs.getString(2) + "   Quantity: " + rs.getString(3)
+                        + "\nPrice: $" + rs.getString(4) + "   Supplier ID: " + rs.getString(5);
             }
             pStmt.close();
         }catch (SQLException e){
@@ -183,8 +185,8 @@ public class MySQL implements DatabaseCreds {
             pStmt.setInt(1, id);
             rs= pStmt.executeQuery();
             while (rs.next()){
-                s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
-                        + " " + rs.getString(4) + " " + rs.getString(5);
+                s+= "ID: " + rs.getString(1) + "   Name: " + rs.getString(2) + "   Quantity: " + rs.getString(3)
+                        + "\nPrice: $" + rs.getString(4) + "   Supplier ID: " + rs.getString(5);
             }
             pStmt.close();
         }catch (SQLException e){
@@ -207,7 +209,6 @@ public class MySQL implements DatabaseCreds {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(s);
         return s;
     }
 
@@ -228,45 +229,28 @@ public class MySQL implements DatabaseCreds {
     }
 
     private void increaseItem(String name, int amount){
-
         try {
-            String query = "SELECT * FROM tool where name= ?";
-            PreparedStatement pStmt = conn.prepareStatement(query);
-            pStmt.setString(1, name);
-            rs = pStmt.executeQuery();
-            while (rs.next()) {
-                String query2 = "UPDATE tool SET quantity= ? WHERE name= ?";
+                String query2 = "UPDATE tool SET quantity = ? WHERE name= ?";
                 PreparedStatement pStmt2 = conn.prepareStatement(query2);
-                pStmt2.setInt(1, Integer.parseInt(rs.getString(3))+amount);
+                pStmt2.setInt(1, getQuantityInt(name) + amount);
                 pStmt2.setString(2,name);
                 pStmt2.executeUpdate();
                 pStmt2.close();
-            }
-            pStmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public String decreaseItem(String name){
-        int quantityCurrent;
+        int currentQuan = getQuantityInt(name);
         try {
-            String query = "SELECT * FROM tool where name= ?";
-            PreparedStatement pStmt = conn.prepareStatement(query);
-            pStmt.setString(1, name);
-            rs = pStmt.executeQuery();
-            quantityCurrent = Integer.parseInt(rs.getString(3));
-            while (rs.next()) {
                 String query2 = "UPDATE tool SET quantity= ? WHERE name= ?";
                 PreparedStatement pStmt2 = conn.prepareStatement(query2);
-                pStmt2.setInt(1, Integer.parseInt(rs.getString(3))-1);
+                pStmt2.setInt(1, getQuantityInt(name)-1);
                 pStmt2.setString(2,name);
                 pStmt2.executeUpdate();
                 pStmt2.close();
-            }
-            pStmt.close();
-            if(quantityCurrent < 21 ){
+            if(currentQuan < 21 ){
                 System.out.println("Making order");
                 makeOrder(name);
             }
@@ -288,34 +272,27 @@ public class MySQL implements DatabaseCreds {
             int rowCount = pState.executeUpdate();
             System.out.println("Order made");
             pState.close();
-            increaseItem(name, 40);
+
         }catch (SQLException e){
 
         }
-
+        increaseItem(name, 40);
 
     }
 
     public String buyItem(String name, int amount){
             int currentStock = getQuantityInt(name);
-            if( currentStock>amount){
+            if( currentStock>=amount){
                 try {
-                    String query = "SELECT * FROM tool where name= ?";
-                    PreparedStatement pStmt = conn.prepareStatement(query);
-                    pStmt.setString(1, name);
-                    rs = pStmt.executeQuery();
-                    while (rs.next()) {
                         String query2 = "UPDATE tool SET quantity= ? WHERE name= ?";
                         PreparedStatement pStmt2 = conn.prepareStatement(query2);
                         pStmt2.setInt(1, Integer.parseInt(rs.getString(3))-amount);
                         pStmt2.setString(2,name);
                         pStmt2.executeUpdate();
                         pStmt2.close();
-                        if(Integer.parseInt(rs.getString(3) ) < 20 ){
+                        if(getQuantityInt(name)-amount < 21 ){
                             makeOrder(name);
                         }
-                    }
-                    pStmt.close();
                     return "Successfully purchased " + amount + " of " + name;
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -334,7 +311,7 @@ public class MySQL implements DatabaseCreds {
             String query = "SELECT * FROM toolorder";
             rs=stmt.executeQuery(query);
             while(rs.next()){
-                s+= rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3)
+                s+= "Date: " + rs.getString(1) + "\n\n" + rs.getString(2) + ":  " + rs.getString(3)
                         + " " + rs.getString(4) + "\n ----------------------------------- \n";
             }
             stmt.close();
@@ -342,7 +319,7 @@ public class MySQL implements DatabaseCreds {
             e.printStackTrace();
         }
         if(s.equals("")){
-            return "No orders made currently.";
+            return "There are currently no orderlines made";
         }
         return s;
     }

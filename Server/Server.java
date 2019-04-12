@@ -55,8 +55,8 @@ public class Server{
     public Server() {
 
         try {
-            //serverSocket = new ServerSocket(44612); //Used to connect two laptops
-            serverSocket = new ServerSocket(9090);
+            serverSocket = new ServerSocket(44612); //Used to connect two laptops
+           // serverSocket = new ServerSocket(9090);
             System.out.println("Server is now running.");
             pool = Executors.newCachedThreadPool();
             makeLogin();
