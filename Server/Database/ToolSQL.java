@@ -2,8 +2,14 @@ package Server.Database;
 
 import java.sql.*;
 
+/**
+ * Tool database
+ */
 public class ToolSQL extends MySQL {
 
+    /**
+     * Creates table of tools
+     */
     public void createToolTable(){
         try{
             DatabaseMetaData meta = conn.getMetaData();
@@ -23,8 +29,16 @@ public class ToolSQL extends MySQL {
         }catch (SQLException e){
             System.out.println("Cant create tool table");
         }
-
     }
+
+    /**
+     * Inserts a tool
+     * @param id tool ID
+     * @param name tool name
+     * @param quant tool quantity
+     * @param price tool price
+     * @param supplierID tool supplier ID
+     */
     public void insertToolPrepared(int id, String name, int quant , double price, int supplierID){
         try{
             String query  = "INSERT INTO TOOL (ID, name, quantity, price, supplierid) values (?,?,?,?,?)";
@@ -40,6 +54,11 @@ public class ToolSQL extends MySQL {
 
         }
     }
+
+    /**
+     * Prints tools
+     * @return tool list
+     */
     public String printAllTools(){
         String s = "";
         try{
@@ -58,6 +77,12 @@ public class ToolSQL extends MySQL {
         }
         return s;
     }
+
+    /**
+     * Gets tool
+     * @param name tool name
+     * @return tool info
+     */
     public String getTool(String name){
         String s = "";
         try{
@@ -75,6 +100,12 @@ public class ToolSQL extends MySQL {
         }
         return s;
     }
+
+    /**
+     * Gets tool
+     * @param id tool ID
+     * @return tool info
+     */
     public String getTool(int id){
         String s = "";
         try{
@@ -92,6 +123,12 @@ public class ToolSQL extends MySQL {
         }
         return s;
     }
+
+    /**
+     * Gets tool quantity
+     * @param name tool name
+     * @return tool quantity
+     */
     public String getQuantity(String name) {
         String s = "";
         try {
@@ -108,6 +145,12 @@ public class ToolSQL extends MySQL {
         }
         return s;
     }
+
+    /**
+     * Gets tool quantity
+     * @param name tool name
+     * @return quantity
+     */
     public int getQuantityInt(String name){
         try {
             String query = "SELECT * FROM tool where name= ?";
@@ -123,6 +166,13 @@ public class ToolSQL extends MySQL {
         }
         return 0;
     }
+
+    /**
+     * Decrease item
+     * @param name tool name
+     * @param orderSQL order database
+     * @return message returned
+     */
     public String decreaseItem(String name, OrderSQL orderSQL){
         int currentQuan = getQuantityInt(name);
         try {
@@ -142,6 +192,14 @@ public class ToolSQL extends MySQL {
         }
         return "Quantity successfully decreased.";
     }
+
+    /**
+     * Buys item
+     * @param name tool name
+     * @param amount amount being bought
+     * @param orderSQL order database
+     * @return message
+     */
     public String buyItem(String name, int amount, OrderSQL orderSQL){
         int currentStock = getQuantityInt(name);
         if( currentStock>=amount){
@@ -159,7 +217,6 @@ public class ToolSQL extends MySQL {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         }
         else
             return "Not enough in stock to purchase " + amount;

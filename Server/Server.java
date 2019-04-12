@@ -138,23 +138,42 @@ public class Server{
         login[1][1] = "2";
     }
 
+    /**
+     * Returns Order database
+     * @return order database
+     */
     public OrderSQL getOrderSQl() {
         return orderSQl;
     }
 
+    /**
+     * Returns supplier database
+     * @return suppleir database
+     */
     public SupplierSQL getSupplierSQL() {
         return supplierSQL;
     }
 
+    /**
+     * Returns tool database
+     * @return tool database
+     */
     public ToolSQL getToolSQL() {
         return toolSQL;
     }
 
+    /**
+     * Connects to database
+     */
     public void connectToDatabase(){
         orderSQl.connect();
         supplierSQL.connect();
         toolSQL.connect();
     }
+
+    /**
+     * Creates tables
+     */
     public void createTables(){
         orderSQl.createOrderTable();
         supplierSQL.createSupplierTable();

@@ -3,8 +3,16 @@ package Server.Database;
 import java.sql.*;
 import java.util.Calendar;
 
+/**
+ * Makes database for order
+ */
 public class OrderSQL extends MySQL {
 
+    /**
+     * Makes order
+     * @param name name of tool
+     * @param toolSQL database for tools
+     */
     public void makeOrder(String name, ToolSQL toolSQL){
         try{
             String query  = "INSERT INTO toolorder (date, orderid, toolname, quantity) values (?,?,?,?)";
@@ -21,8 +29,11 @@ public class OrderSQL extends MySQL {
 
         }
         increaseItem(name, 40, toolSQL);
-
     }
+
+    /**
+     * Creates order table
+     */
     public void createOrderTable(){
         try{
             DatabaseMetaData meta = conn.getMetaData();
@@ -41,8 +52,12 @@ public class OrderSQL extends MySQL {
             System.out.println("Cant create order table");
             e.printStackTrace();
         }
-
     }
+
+    /**
+     * Prints order
+     * @return order
+     */
     public String printOrder(){
         String s = "";
         try{
@@ -62,6 +77,13 @@ public class OrderSQL extends MySQL {
         }
         return s;
     }
+
+    /**
+     * Increase stock if below 20
+     * @param name tool name
+     * @param amount tool amount increases
+     * @param toolSQL tool database
+     */
     private void increaseItem(String name, int amount, ToolSQL toolSQL){
         try {
             String query2 = "UPDATE tool SET quantity = ? WHERE name= ?";

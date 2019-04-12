@@ -9,13 +9,22 @@ import java.sql.SQLException;
 import java.sql.*;
 import java.util.Calendar;
 
+/**
+ *
+ */
 public class MySQL implements DatabaseCreds {
-
+    /**
+     * Connection for MySQL
+     */
     protected Connection conn;
+    /**
+     * Results from mySQL
+     */
     protected ResultSet rs;
 
-
-
+    /**
+     * Connects to database
+     */
     public void connect(){
 
         try{
@@ -25,8 +34,11 @@ public class MySQL implements DatabaseCreds {
         }catch(SQLException e){
             System.out.println("Connection failed");
         }
-
     }
+
+    /**
+     * Closes connection
+     */
     public void closeConnection(){
         try{
             rs.close();
@@ -35,8 +47,6 @@ public class MySQL implements DatabaseCreds {
             e.printStackTrace();
         }
     }
-
-
 }
 
 

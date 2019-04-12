@@ -2,7 +2,14 @@ package Server.Database;
 
 import java.sql.*;
 
+/**
+ * Supplier database
+ */
 public class SupplierSQL extends MySQL {
+
+    /**
+     * Creates table of suppliers
+     */
     public void createSupplierTable(){
         try{
             DatabaseMetaData meta = conn.getMetaData();
@@ -21,8 +28,15 @@ public class SupplierSQL extends MySQL {
         }catch (SQLException e){
             System.out.println("Cant create supplier table");
         }
-
     }
+
+    /**
+     * Inserts supplier
+     * @param supId supplier ID
+     * @param supName supplier name
+     * @param supAdd supplier address
+     * @param supContact supplier contact
+     */
     public void insertSupplier(int supId, String supName, String supAdd, String supContact ){
         try{
             String query  = "INSERT INTO SUPPLIER (ID, name, address, contact) values (?,?,?,?)";
@@ -33,9 +47,6 @@ public class SupplierSQL extends MySQL {
             pState.setString(4,supContact);
             int rowCount = pState.executeUpdate();
             pState.close();
-        }catch (SQLException e){
-
-        }
-
+        }catch (SQLException e){ }
     }
 }
