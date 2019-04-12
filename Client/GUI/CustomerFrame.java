@@ -37,7 +37,7 @@ public class CustomerFrame extends JFrame{
      */
     public CustomerFrame() {
         this.setTitle("Customer Window");
-        this.setSize(1100, 450);
+        this.setSize(650, 450);
         this.add(createUpperPanel(), BorderLayout.NORTH);
         this.add(createCenterPanel(), BorderLayout.CENTER);
         this.add(createButtonPanel(), BorderLayout.WEST);

@@ -136,8 +136,8 @@ public class Client {
     }
 
     public static void main(String[] args){
-        //Client aClient = new Client("10.13.141.52", 44612); //Used to connect two laptops
-        Client aClient = new Client("localhost", 9090);
+        Client aClient = new Client("10.13.96.123", 44612); //Used to connect two laptops
+       // Client aClient = new Client("localhost", 9090);
         aClient.toolList.getChoiceFrame().setVisible(true);
     }
 }
