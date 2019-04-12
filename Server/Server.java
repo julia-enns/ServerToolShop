@@ -159,7 +159,6 @@ public class Server{
         ds.getDatabase().createTables();
         ds.serverReadItems();
         ds.serverReadSuppliers();
-        ds.getDatabase().decreaseItem("Widgets");
         ds.getUserInput();
 
     }

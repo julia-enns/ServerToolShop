@@ -17,7 +17,6 @@ public class Choice implements Runnable {
      * List of logins
      */
     private String[][] login;
-    private Shop theShop;
     /**
      * PrintWriter that writes to the client
      */
@@ -33,7 +32,7 @@ public class Choice implements Runnable {
     /**
      * The tool shop
      */
-    private Server theSever;
+    private Server theServer;
 
     /**
      * Constructs an object of type Choice
@@ -46,7 +45,7 @@ public class Choice implements Runnable {
             socketInput = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
             socketOutput = new PrintWriter(aSocket.getOutputStream(), true);
             login = log;
-            theSever = server;
+            theServer = server;
         } catch (IOException e){
             System.err.println("Error making choice");
         }
@@ -79,36 +78,36 @@ public class Choice implements Runnable {
                         socketOutput.println("false" + "\n\0");
                         break;
                     case 1:
-                        socketOutput.println(theSever.getDatabase().printAllTools() + "\n\0");
+                        socketOutput.println(theServer.getDatabase().printAllTools() + "\n\0");
                         break;
                     case 2:
-                        socketOutput.println(theSever.getDatabase().getTool(decode[1]) + "\n\0");
+                        socketOutput.println(theServer.getDatabase().getTool(decode[1]) + "\n\0");
                         break;
                     case 3:
                         try {
-                            socketOutput.println(theSever.getDatabase().getTool(Integer.parseInt(decode[1])) + "\n\0");
+                            socketOutput.println(theServer.getDatabase().getTool(Integer.parseInt(decode[1])) + "\n\0");
                             break;
                         } catch (NumberFormatException e) {
                             socketOutput.print("");
                         }
                     case 4:
-                        socketOutput.println(theSever.getDatabase().getQuantity(decode[1]) + "\n\0");
+                        socketOutput.println(theServer.getDatabase().getQuantity(decode[1]) + "\n\0");
                         break;
                     case 5:
-                        socketOutput.println(theSever.getDatabase().decreaseItem(decode[1]) + "\n\0");
+                        socketOutput.println(theServer.getDatabase().decreaseItem(decode[1]) + "\n\0");
                         break;
                     case 6:
-                        socketOutput.println(theShop.printOrder() + "\n\0");
+                        socketOutput.println(theServer.getDatabase().printOrder() + "\n\0");
                         break;
                     case 7:
-                        socketOutput.println(theSever.getDatabase().printAllTools() + "\n\0");
+                        socketOutput.println(theServer.getDatabase().printAllTools() + "\n\0");
                         break;
                     case 8:
                         try {
-                            socketOutput.println(theShop.buyItem(decode[1], Integer.parseInt(decode[2])) + "\n\0");
+                            socketOutput.println(theServer.getDatabase().buyItem(decode[1], Integer.parseInt(decode[2])) + "\n\0");
                             break;
                         } catch (NumberFormatException e){
-                            socketOutput.println(theShop.buyItem("", 0) + "\n\0");
+                            socketOutput.println(theServer.getDatabase().buyItem("", 0) + "\n\0");
                         }
                 }
             }
